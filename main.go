@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/fchimpan/gh-workflow-stats/cmd"
+	"github.com/fchimpan/gh-workflow-stats/workflow"
 )
 
 func main() {
-	if err := cmd.Execute(); err != nil {
+	if err := workflow.Execute(); err != nil {
 		panic(err)
 	}
 }

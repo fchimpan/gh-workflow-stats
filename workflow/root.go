@@ -1,25 +1,24 @@
-package cmd
+package workflow
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/google/go-github/v57/github"
 	"github.com/spf13/cobra"
 )
 
-const defaultHost = "github.com"
-
-type RepositoryInfo struct {
+type repositoryInfo struct {
 	Host             string
 	Org              string
 	Repo             string
 	WorkflowFileName string
-	ID               int64
+	WorkflowID       int64
 }
 
 type workflowStatsConfig struct {
-	RepoInfo *RepositoryInfo
-	Params   *github.ListWorkflowRunsOptions
+	repoInfo *repositoryInfo
+	params   *github.ListWorkflowRunsOptions
 }
 
 func Execute() error {
@@ -37,6 +36,8 @@ func newCmdWorkflowStats() *cobra.Command {
 		repo                string
 		fileName            string
 		id                  int64
+		json                bool
+		jobs                bool
 		actor               string
 		branch              string
 		event               string
@@ -49,14 +50,15 @@ func newCmdWorkflowStats() *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "workflow-stats",
-		Short: "API to get workflow stats. See https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#list-workflow-runs-for-a-workflow",
+		Use:     "workflow-stats",
+		Short:   "Get workflow runs stats. Retrieve the success rate, execution time, etc., of workflows.",
+		Example: "$ gh workflow-stats --org=OWNER --repo=REPO -f ci.yaml\n",
 		RunE: func(cmd *cobra.Command, _ []string) error {
-			if host == "" {
-				host = defaultHost
+			if envHost := os.Getenv("GH_HOST"); envHost != "" && !cmd.Flags().Changed("host") {
+				host = envHost
 			}
 			if org == "" || repo == "" {
-				return fmt.Errorf("--org and --repo flag must be specified")
+				return fmt.Errorf("--org and --repo flag must be specified. If you want to use GitHub Enterprise Server, specify your GitHub Enterprise Server host with --host flag")
 			}
 			if fileName == "" && id == -1 {
 				return fmt.Errorf("--file or --id flag must be specified")
@@ -64,21 +66,16 @@ func newCmdWorkflowStats() *cobra.Command {
 			if perPage > 100 || perPage < 1 {
 				perPage = 100
 			}
-			s := newSpinner(spinnerOptions{
-				text:          spinnerText,
-				charSetsIndex: 14,
-				color:         "green",
-			})
 
 			return workflowStats(&workflowStatsConfig{
-				RepoInfo: &RepositoryInfo{
+				repoInfo: &repositoryInfo{
 					Host:             host,
 					Org:              org,
 					Repo:             repo,
 					WorkflowFileName: fileName,
-					ID:               id,
+					WorkflowID:       id,
 				},
-				Params: &github.ListWorkflowRunsOptions{
+				params: &github.ListWorkflowRunsOptions{
 					Actor:               actor,
 					Branch:              branch,
 					Event:               event,
@@ -89,14 +86,16 @@ func newCmdWorkflowStats() *cobra.Command {
 					CheckSuiteID:        checkSuiteID,
 					ListOptions:         github.ListOptions{PerPage: perPage},
 				},
-			}, s)
+			}, jobs, json)
 		},
 	}
-	cmd.Flags().StringVarP(&host, "host", "H", "", "GitHub host. If not specified, default is github.com. If you want to use GitHub Enterprise Server, specify your GitHub Enterprise Server host.")
+	cmd.Flags().StringVarP(&host, "host", "H", "github.com", "GitHub host. If not specified, default is github.com. If you want to use GitHub Enterprise Server, specify your GitHub Enterprise Server host.")
 	cmd.Flags().StringVarP(&org, "org", "o", "", "GitHub organization")
 	cmd.Flags().StringVarP(&repo, "repo", "r", "", "GitHub repository")
 	cmd.Flags().StringVarP(&fileName, "file", "f", "", "The name of the workflow file. e.g. ci.yaml. You can also pass the workflow id as a integer.")
 	cmd.Flags().Int64VarP(&id, "id", "i", -1, "The ID of the workflow. You can also pass the workflow file name as a string.")
+	cmd.PersistentFlags().BoolVar(&json, "json", false, "Output as JSON")
+	cmd.PersistentFlags().BoolVar(&jobs, "jobs", false, "Fetch workflow jobs stats. Retrieve the steps and jobs success rate.")
 	// Workflow runs query parameters
 	// See https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#list-workflow-runs-for-a-workflow
 	cmd.Flags().StringVarP(&actor, "actor", "a", "", "Workflow run actor")
