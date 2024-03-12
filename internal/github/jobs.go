@@ -48,15 +48,12 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 	close(jobsCh)
 	close(errCh)
 
-	var err error
 	for e := range errCh {
 		if e != nil {
-			err = e
+			return nil, e
 		}
 	}
-	if err != nil {
-		return nil, err
-	}
+
 	allJobs := make([]*github.WorkflowJob, 0, len(runs))
 	for jobs := range jobsCh {
 		allJobs = append(allJobs, jobs...)

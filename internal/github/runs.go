@@ -57,7 +57,7 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 	errCh := make(chan error, resp.LastPage)
 
 	for i := resp.FirstPage + 1; i <= resp.LastPage; i++ {
-		go func(i int) error {
+		go func(i int) {
 			defer wg.Done()
 
 			runs, _, err := c.listWorkflowRuns(ctx, cfg, &github.ListWorkflowRunsOptions{
@@ -76,11 +76,9 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 			})
 			if err != nil {
 				errCh <- err
-				return err
 			}
 			runsCh <- runs.WorkflowRuns
 
-			return nil
 		}(i)
 	}
 	wg.Wait()
@@ -89,11 +87,8 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 
 	for e := range errCh {
 		if e != nil {
-			err = e
+			return nil, e
 		}
-	}
-	if err != nil {
-		return nil, err
 	}
 	allRuns := make([]*github.WorkflowRun, 0, *initRuns.TotalCount)
 	for runs := range runsCh {
