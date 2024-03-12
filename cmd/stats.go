@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/fchimpan/workflow-stats/internal/github"
-	"github.com/fchimpan/workflow-stats/internal/parser"
-	"github.com/fchimpan/workflow-stats/internal/printer"
+	"github.com/fchimpan/gh-workflow-stats/internal/github"
+	"github.com/fchimpan/gh-workflow-stats/internal/parser"
+	"github.com/fchimpan/gh-workflow-stats/internal/printer"
 )
 
 type config struct {

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/fchimpan/workflow-stats/cmd"
+	"github.com/fchimpan/gh-workflow-stats/cmd"
 )
 
 func main() {

@@ -17,7 +17,7 @@ type SpinnerOptions struct {
 func NewSpinner(opt SpinnerOptions) *Spinner {
 	s := spinner.New(spinner.CharSets[opt.CharSetsIndex], 100*time.Millisecond)
 	s.Suffix = opt.Text
-	s.Color(opt.Color)
+	_ = s.Color(opt.Color)
 	return (*Spinner)(s)
 }
 

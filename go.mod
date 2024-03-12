@@ -1,4 +1,4 @@
-module github.com/fchimpan/workflow-stats
+module github.com/fchimpan/gh-workflow-stats
 
 go 1.22.0
 

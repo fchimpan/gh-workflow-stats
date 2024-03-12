@@ -76,6 +76,7 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 			})
 			if err != nil {
 				errCh <- err
+				return err
 			}
 			runsCh <- runs.WorkflowRuns
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/fatih/color"
-	"github.com/fchimpan/workflow-stats/internal/parser"
+	"github.com/fchimpan/gh-workflow-stats/internal/parser"
 )
 
 func Runs(wrs *parser.WorkflowRunsStatsSummary) {

@@ -5,7 +5,7 @@ import (
 	"sort"
 
 	"github.com/fatih/color"
-	"github.com/fchimpan/workflow-stats/internal/parser"
+	"github.com/fchimpan/gh-workflow-stats/internal/parser"
 )
 
 func FailureJobs(jobRes []*parser.WorkflowJobsStatsSummary, n int) {
