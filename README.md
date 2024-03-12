@@ -1,4 +1,12 @@
-# WIP
+# GitHub Actions workflow stats
+
+## Description
+
+## Installation
+
+```
+gh extensions install 
+```
 
 ## Usage
 

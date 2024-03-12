@@ -1,39 +1,56 @@
-/*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-*/
 package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
 
-// jobsCmd represents the jobs command
-var jobsCmd = &cobra.Command{
-	Use:   "jobs",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+var (
+	numJobs int
+)
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("jobs called")
+var jobsCmd = &cobra.Command{
+	Use:     "jobs",
+	Short:   "Fetch workflow jobs stats. Retrieve the steps and jobs success rate.",
+	Example: `$ gh workflow-stats jobs --org=OWNER --repo=REPO --id=WORKFLOW_ID`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if envHost := os.Getenv("GH_HOST"); envHost != "" && !cmd.Flags().Changed("host") {
+			host = envHost
+		}
+		if org == "" || repo == "" {
+			return fmt.Errorf("--org and --repo flag must be specified. If you want to use GitHub Enterprise Server, specify your GitHub Enterprise Server host with --host flag")
+		}
+		if fileName == "" && id == -1 {
+			return fmt.Errorf("--file or --id flag must be specified")
+		}
+		if numJobs < 1 {
+			numJobs = 1
+		}
+		return workflowStats(config{
+			host:             host,
+			org:              org,
+			repo:             repo,
+			workflowFileName: fileName,
+			workflowID:       id,
+		}, options{
+			actor:               actor,
+			branch:              branch,
+			event:               event,
+			status:              status,
+			created:             created,
+			headSHA:             headSHA,
+			excludePullRequests: excludePullRequests,
+			checkSuiteID:        checkSuiteID,
+			all:                 all,
+			js:                  js,
+			jobNum:              numJobs,
+		}, true)
 	},
 }
 
 func init() {
-	// rootCmd.AddCommand(jobsCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// jobsCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// jobsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.AddCommand(jobsCmd)
+	jobsCmd.Flags().IntVarP(&numJobs, "num-jobs", "n", 3, "Number of jobs to display")
 }
