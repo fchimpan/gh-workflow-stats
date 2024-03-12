@@ -1,0 +1,1992 @@
+{
+  "workflow_runs_stats_summary": {
+    "total_runs_count": 100,
+    "name": "Tests",
+    "rate": {
+      "success_rate": 0.79,
+      "failure_rate": 0.14,
+      "others_rate": 0.06999999999999995
+    },
+    "execution_duration_stats": {
+      "min": 365,
+      "max": 1080,
+      "avg": 505.54430379746833,
+      "med": 464,
+      "std": 120.8452088122228
+    },
+    "conclusions": {
+      "failure": {
+        "runs_count": 14,
+        "workflow_runs": [
+          {
+            "id": 8178615249,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8178615249",
+            "run_started_at": "2024-03-06T20:53:43Z",
+            "duration": 0
+          },
+          {
+            "id": 8178494723,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8178494723",
+            "run_started_at": "2024-03-06T20:42:07Z",
+            "duration": 0
+          },
+          {
+            "id": 8178432563,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8178432563",
+            "run_started_at": "2024-03-06T20:36:01Z",
+            "duration": 0
+          },
+          {
+            "id": 8178314603,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8178314603",
+            "run_started_at": "2024-03-06T20:26:14Z",
+            "duration": 0
+          },
+          {
+            "id": 8178250009,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8178250009",
+            "run_started_at": "2024-03-06T20:20:44Z",
+            "duration": 0
+          },
+          {
+            "id": 8178247079,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8178247079",
+            "run_started_at": "2024-03-06T20:20:31Z",
+            "duration": 0
+          },
+          {
+            "id": 8174112382,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8174112382",
+            "run_started_at": "2024-03-06T14:57:34Z",
+            "duration": 0
+          },
+          {
+            "id": 8117020991,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8117020991",
+            "run_started_at": "2024-03-01T20:47:15Z",
+            "duration": 0
+          },
+          {
+            "id": 8116997610,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8116997610",
+            "run_started_at": "2024-03-01T20:44:44Z",
+            "duration": 0
+          },
+          {
+            "id": 8116985595,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8116985595",
+            "run_started_at": "2024-03-01T20:43:13Z",
+            "duration": 0
+          },
+          {
+            "id": 8116985358,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8116985358",
+            "run_started_at": "2024-03-01T20:43:11Z",
+            "duration": 0
+          },
+          {
+            "id": 8116020627,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8116020627",
+            "run_started_at": "2024-03-01T19:06:51Z",
+            "duration": 0
+          },
+          {
+            "id": 8116020395,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8116020395",
+            "run_started_at": "2024-03-01T19:06:50Z",
+            "duration": 0
+          },
+          {
+            "id": 8068240447,
+            "status": "completed",
+            "conclusion": "failure",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8068240447",
+            "run_started_at": "2024-02-27T16:39:45Z",
+            "duration": 0
+          }
+        ]
+      },
+      "others": {
+        "runs_count": 7,
+        "workflow_runs": [
+          {
+            "id": 8123276222,
+            "status": "completed",
+            "conclusion": "action_required",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8123276222",
+            "run_started_at": "2024-03-02T14:02:57Z",
+            "duration": 0
+          },
+          {
+            "id": 8081862941,
+            "status": "completed",
+            "conclusion": "action_required",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8081862941",
+            "run_started_at": "2024-02-28T14:19:14Z",
+            "duration": 0
+          },
+          {
+            "id": 8058366605,
+            "status": "completed",
+            "conclusion": "action_required",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8058366605",
+            "run_started_at": "2024-02-27T01:45:37Z",
+            "duration": 0
+          },
+          {
+            "id": 8050688367,
+            "status": "completed",
+            "conclusion": "action_required",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8050688367",
+            "run_started_at": "2024-02-26T14:41:26Z",
+            "duration": 0
+          },
+          {
+            "id": 8039041836,
+            "status": "completed",
+            "conclusion": "action_required",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8039041836",
+            "run_started_at": "2024-02-25T15:38:21Z",
+            "duration": 0
+          },
+          {
+            "id": 7964544095,
+            "status": "completed",
+            "conclusion": "action_required",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7964544095",
+            "run_started_at": "2024-02-19T19:50:30Z",
+            "duration": 0
+          },
+          {
+            "id": 7904859017,
+            "status": "completed",
+            "conclusion": "action_required",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7904859017",
+            "run_started_at": "2024-02-14T17:12:34Z",
+            "duration": 0
+          }
+        ]
+      },
+      "success": {
+        "runs_count": 79,
+        "workflow_runs": [
+          {
+            "id": 8246798031,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8246798031",
+            "run_started_at": "2024-03-12T09:53:48Z",
+            "duration": 474
+          },
+          {
+            "id": 8246669599,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8246669599",
+            "run_started_at": "2024-03-12T09:43:33Z",
+            "duration": 409
+          },
+          {
+            "id": 8246642128,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8246642128",
+            "run_started_at": "2024-03-12T09:41:17Z",
+            "duration": 447
+          },
+          {
+            "id": 8192902898,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8192902898",
+            "run_started_at": "2024-03-07T18:17:22Z",
+            "duration": 705
+          },
+          {
+            "id": 8186205239,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8186205239",
+            "run_started_at": "2024-03-07T09:58:05Z",
+            "duration": 418
+          },
+          {
+            "id": 8179466125,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 2,
+            "html_url": "https://github.com/cli/cli/actions/runs/8179466125",
+            "run_started_at": "2024-03-07T09:33:50Z",
+            "duration": 508
+          },
+          {
+            "id": 8179178378,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8179178378",
+            "run_started_at": "2024-03-06T21:44:00Z",
+            "duration": 841
+          },
+          {
+            "id": 8179154612,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8179154612",
+            "run_started_at": "2024-03-06T21:41:37Z",
+            "duration": 605
+          },
+          {
+            "id": 8178743869,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8178743869",
+            "run_started_at": "2024-03-06T21:05:21Z",
+            "duration": 864
+          },
+          {
+            "id": 8178674132,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8178674132",
+            "run_started_at": "2024-03-06T20:59:49Z",
+            "duration": 492
+          },
+          {
+            "id": 8177104548,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8177104548",
+            "run_started_at": "2024-03-06T18:39:39Z",
+            "duration": 492
+          },
+          {
+            "id": 8176532027,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8176532027",
+            "run_started_at": "2024-03-06T17:53:17Z",
+            "duration": 586
+          },
+          {
+            "id": 8174963304,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8174963304",
+            "run_started_at": "2024-03-06T15:57:13Z",
+            "duration": 446
+          },
+          {
+            "id": 8174595802,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 2,
+            "html_url": "https://github.com/cli/cli/actions/runs/8174595802",
+            "run_started_at": "2024-03-06T15:48:57Z",
+            "duration": 491
+          },
+          {
+            "id": 8165180304,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8165180304",
+            "run_started_at": "2024-03-06T00:48:34Z",
+            "duration": 599
+          },
+          {
+            "id": 8164388036,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8164388036",
+            "run_started_at": "2024-03-05T23:22:02Z",
+            "duration": 577
+          },
+          {
+            "id": 8164376957,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8164376957",
+            "run_started_at": "2024-03-05T23:20:53Z",
+            "duration": 600
+          },
+          {
+            "id": 8163359586,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8163359586",
+            "run_started_at": "2024-03-05T21:39:35Z",
+            "duration": 501
+          },
+          {
+            "id": 8160053868,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8160053868",
+            "run_started_at": "2024-03-05T16:58:13Z",
+            "duration": 776
+          },
+          {
+            "id": 8148535708,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8148535708",
+            "run_started_at": "2024-03-04T23:34:56Z",
+            "duration": 463
+          },
+          {
+            "id": 8148387445,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8148387445",
+            "run_started_at": "2024-03-04T23:18:05Z",
+            "duration": 556
+          },
+          {
+            "id": 8148079961,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8148079961",
+            "run_started_at": "2024-03-04T22:45:58Z",
+            "duration": 469
+          },
+          {
+            "id": 8148056194,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8148056194",
+            "run_started_at": "2024-03-04T22:43:02Z",
+            "duration": 552
+          },
+          {
+            "id": 8148048382,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8148048382",
+            "run_started_at": "2024-03-04T22:42:16Z",
+            "duration": 586
+          },
+          {
+            "id": 8148013236,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8148013236",
+            "run_started_at": "2024-03-04T22:38:22Z",
+            "duration": 596
+          },
+          {
+            "id": 8147999082,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8147999082",
+            "run_started_at": "2024-03-04T22:36:54Z",
+            "duration": 619
+          },
+          {
+            "id": 8147187440,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8147187440",
+            "run_started_at": "2024-03-04T21:22:32Z",
+            "duration": 472
+          },
+          {
+            "id": 8144107435,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8144107435",
+            "run_started_at": "2024-03-04T17:04:17Z",
+            "duration": 439
+          },
+          {
+            "id": 8143929999,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8143929999",
+            "run_started_at": "2024-03-04T16:50:51Z",
+            "duration": 420
+          },
+          {
+            "id": 8143929780,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8143929780",
+            "run_started_at": "2024-03-04T16:50:50Z",
+            "duration": 404
+          },
+          {
+            "id": 8143862131,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8143862131",
+            "run_started_at": "2024-03-04T16:45:48Z",
+            "duration": 431
+          },
+          {
+            "id": 8143861993,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8143861993",
+            "run_started_at": "2024-03-04T16:45:47Z",
+            "duration": 435
+          },
+          {
+            "id": 8117176855,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8117176855",
+            "run_started_at": "2024-03-01T21:04:45Z",
+            "duration": 477
+          },
+          {
+            "id": 8117176632,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8117176632",
+            "run_started_at": "2024-03-01T21:04:44Z",
+            "duration": 445
+          },
+          {
+            "id": 8114415849,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8114415849",
+            "run_started_at": "2024-03-01T16:45:33Z",
+            "duration": 460
+          },
+          {
+            "id": 8114215617,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8114215617",
+            "run_started_at": "2024-03-01T16:29:31Z",
+            "duration": 473
+          },
+          {
+            "id": 8113390433,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8113390433",
+            "run_started_at": "2024-03-01T15:33:20Z",
+            "duration": 1080
+          },
+          {
+            "id": 8111431760,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxxe4",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8111431760",
+            "run_started_at": "2024-03-01T12:35:27Z",
+            "duration": 434
+          },
+          {
+            "id": 8111431426,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxxe4",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8111431426",
+            "run_started_at": "2024-03-01T12:35:25Z",
+            "duration": 400
+          },
+          {
+            "id": 8111412034,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxxe4",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8111412034",
+            "run_started_at": "2024-03-01T12:33:50Z",
+            "duration": 423
+          },
+          {
+            "id": 8111405462,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxxe4",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8111405462",
+            "run_started_at": "2024-03-01T12:33:14Z",
+            "duration": 440
+          },
+          {
+            "id": 8110395969,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8110395969",
+            "run_started_at": "2024-03-01T11:04:45Z",
+            "duration": 435
+          },
+          {
+            "id": 8109285997,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8109285997",
+            "run_started_at": "2024-03-01T09:30:25Z",
+            "duration": 476
+          },
+          {
+            "id": 8105813816,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 2,
+            "html_url": "https://github.com/cli/cli/actions/runs/8105813816",
+            "run_started_at": "2024-03-01T10:57:52Z",
+            "duration": 365
+          },
+          {
+            "id": 8103574346,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 2,
+            "html_url": "https://github.com/cli/cli/actions/runs/8103574346",
+            "run_started_at": "2024-03-01T09:19:55Z",
+            "duration": 416
+          },
+          {
+            "id": 8098952808,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8098952808",
+            "run_started_at": "2024-02-29T16:02:43Z",
+            "duration": 466
+          },
+          {
+            "id": 8098776700,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8098776700",
+            "run_started_at": "2024-02-29T15:49:33Z",
+            "duration": 464
+          },
+          {
+            "id": 8096585346,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8096585346",
+            "run_started_at": "2024-02-29T13:10:13Z",
+            "duration": 435
+          },
+          {
+            "id": 8096033209,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8096033209",
+            "run_started_at": "2024-02-29T12:30:54Z",
+            "duration": 462
+          },
+          {
+            "id": 8095669015,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8095669015",
+            "run_started_at": "2024-02-29T12:04:04Z",
+            "duration": 413
+          },
+          {
+            "id": 8080694587,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8080694587",
+            "run_started_at": "2024-02-28T12:53:32Z",
+            "duration": 505
+          },
+          {
+            "id": 8080496874,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8080496874",
+            "run_started_at": "2024-02-28T12:39:02Z",
+            "duration": 467
+          },
+          {
+            "id": 8080496476,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8080496476",
+            "run_started_at": "2024-02-28T12:39:01Z",
+            "duration": 621
+          },
+          {
+            "id": 8070600072,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8070600072",
+            "run_started_at": "2024-02-27T19:57:54Z",
+            "duration": 782
+          },
+          {
+            "id": 8070546820,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8070546820",
+            "run_started_at": "2024-02-27T19:52:20Z",
+            "duration": 673
+          },
+          {
+            "id": 8068506595,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/8068506595",
+            "run_started_at": "2024-02-27T17:01:03Z",
+            "duration": 454
+          },
+          {
+            "id": 8062636694,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 2,
+            "html_url": "https://github.com/cli/cli/actions/runs/8062636694",
+            "run_started_at": "2024-02-29T12:32:33Z",
+            "duration": 369
+          },
+          {
+            "id": 7997027570,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 2,
+            "html_url": "https://github.com/cli/cli/actions/runs/7997027570",
+            "run_started_at": "2024-02-29T12:12:39Z",
+            "duration": 456
+          },
+          {
+            "id": 7974641106,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7974641106",
+            "run_started_at": "2024-02-20T13:58:34Z",
+            "duration": 447
+          },
+          {
+            "id": 7973334002,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7973334002",
+            "run_started_at": "2024-02-20T12:19:40Z",
+            "duration": 429
+          },
+          {
+            "id": 7956431056,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7956431056",
+            "run_started_at": "2024-02-19T08:12:18Z",
+            "duration": 623
+          },
+          {
+            "id": 7951751260,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7951751260",
+            "run_started_at": "2024-02-18T21:12:14Z",
+            "duration": 420
+          },
+          {
+            "id": 7951100756,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7951100756",
+            "run_started_at": "2024-02-18T19:05:11Z",
+            "duration": 404
+          },
+          {
+            "id": 7947556381,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7947556381",
+            "run_started_at": "2024-02-18T07:59:58Z",
+            "duration": 454
+          },
+          {
+            "id": 7947161233,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 2,
+            "html_url": "https://github.com/cli/cli/actions/runs/7947161233",
+            "run_started_at": "2024-02-20T13:49:56Z",
+            "duration": 444
+          },
+          {
+            "id": 7941757547,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7941757547",
+            "run_started_at": "2024-02-17T12:45:57Z",
+            "duration": 408
+          },
+          {
+            "id": 7941535420,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7941535420",
+            "run_started_at": "2024-02-17T12:10:24Z",
+            "duration": 499
+          },
+          {
+            "id": 7941531226,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7941531226",
+            "run_started_at": "2024-02-17T12:09:44Z",
+            "duration": 460
+          },
+          {
+            "id": 7937887459,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7937887459",
+            "run_started_at": "2024-02-17T00:30:21Z",
+            "duration": 469
+          },
+          {
+            "id": 7937041403,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 2,
+            "html_url": "https://github.com/cli/cli/actions/runs/7937041403",
+            "run_started_at": "2024-02-28T13:03:33Z",
+            "duration": 637
+          },
+          {
+            "id": 7933914619,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7933914619",
+            "run_started_at": "2024-02-16T17:12:30Z",
+            "duration": 427
+          },
+          {
+            "id": 7933725165,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7933725165",
+            "run_started_at": "2024-02-16T16:56:31Z",
+            "duration": 436
+          },
+          {
+            "id": 7933198277,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7933198277",
+            "run_started_at": "2024-02-16T16:09:58Z",
+            "duration": 467
+          },
+          {
+            "id": 7918272309,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7918272309",
+            "run_started_at": "2024-02-15T15:25:09Z",
+            "duration": 436
+          },
+          {
+            "id": 7914612249,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7914612249",
+            "run_started_at": "2024-02-15T10:39:00Z",
+            "duration": 454
+          },
+          {
+            "id": 7913415580,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7913415580",
+            "run_started_at": "2024-02-15T09:01:47Z",
+            "duration": 465
+          },
+          {
+            "id": 7896535739,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 2,
+            "html_url": "https://github.com/cli/cli/actions/runs/7896535739",
+            "run_started_at": "2024-02-28T12:57:04Z",
+            "duration": 459
+          },
+          {
+            "id": 7870446056,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7870446056",
+            "run_started_at": "2024-02-12T10:34:18Z",
+            "duration": 496
+          },
+          {
+            "id": 7870435756,
+            "status": "completed",
+            "conclusion": "success",
+            "actor": "xxx",
+            "run_attempt": 1,
+            "html_url": "https://github.com/cli/cli/actions/runs/7870435756",
+            "run_started_at": "2024-02-12T10:33:26Z",
+            "duration": 440
+          }
+        ]
+      }
+    }
+  },
+  "workflow_jobs_stats_summary": [
+    {
+      "name": "build (ubuntu-latest)",
+      "total_runs_count": 93,
+      "rate": {
+        "success_rate": 0.8494623655913979,
+        "failure_rate": 0.15053763440860216,
+        "others_rate": 0
+      },
+      "conclusions": {
+        "failure": 14,
+        "success": 79
+      },
+      "execution_duration_stats": {
+        "min": 166,
+        "max": 225,
+        "avg": 185.2405063291139,
+        "med": 178,
+        "std": 15.9367541045597
+      },
+      "steps_summary": [
+        {
+          "name": "Set up job",
+          "number": 1,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 3,
+            "avg": 1.3225806451612903,
+            "med": 1,
+            "std": 0.6584649846191345
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Set up Go 1.21",
+          "number": 2,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 12,
+            "avg": 1.5698924731182795,
+            "med": 1,
+            "std": 1.9587018383775974
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Check out code",
+          "number": 3,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 2,
+            "avg": 0.5376344086021505,
+            "med": 1,
+            "std": 0.539994818472676
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Restore Go modules cache",
+          "number": 4,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 1,
+            "max": 8,
+            "avg": 3.4516129032258065,
+            "med": 3,
+            "std": 1.5897259453562684
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Download dependencies",
+          "number": 5,
+          "runs_count": 93,
+          "conclusion": {
+            "failure": 2,
+            "success": 91
+          },
+          "rate": {
+            "success_rate": 0.978494623655914,
+            "failure_rate": 0.021505376344086023,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 4,
+            "avg": 0.053763440860215055,
+            "med": 0,
+            "std": 0.4241523209315271
+          },
+          "failure_html_url": [
+            "https://github.com/cli/cli/actions/runs/8117020991/job/22188309868",
+            "https://github.com/cli/cli/actions/runs/8116997610/job/22188235639"
+          ]
+        },
+        {
+          "name": "Run tests",
+          "number": 6,
+          "runs_count": 93,
+          "conclusion": {
+            "failure": 6,
+            "others": 2,
+            "success": 85
+          },
+          "rate": {
+            "success_rate": 0.9139784946236559,
+            "failure_rate": 0.06451612903225806,
+            "others_rate": 0.021505376344086058
+          },
+          "execution_duration_stats": {
+            "min": 130,
+            "max": 163,
+            "avg": 141.67032967032966,
+            "med": 137,
+            "std": 10.102828398501044
+          },
+          "failure_html_url": [
+            "https://github.com/cli/cli/actions/runs/8116985595/job/22188194097",
+            "https://github.com/cli/cli/actions/runs/8068240447/job/22040506851",
+            "https://github.com/cli/cli/actions/runs/8116985358/job/22188193249",
+            "https://github.com/cli/cli/actions/runs/8116020395/job/22185129915",
+            "https://github.com/cli/cli/actions/runs/8174112382/job/22348132574",
+            "https://github.com/cli/cli/actions/runs/8116020627/job/22185130738"
+          ]
+        },
+        {
+          "name": "Build",
+          "number": 7,
+          "runs_count": 93,
+          "conclusion": {
+            "others": 8,
+            "success": 85
+          },
+          "rate": {
+            "success_rate": 0.9139784946236559,
+            "failure_rate": 0,
+            "others_rate": 0.08602150537634412
+          },
+          "execution_duration_stats": {
+            "min": 29,
+            "max": 43,
+            "avg": 33.50588235294118,
+            "med": 30,
+            "std": 5.171468171127294
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Build executable",
+          "number": 8,
+          "runs_count": 2,
+          "conclusion": {
+            "success": 2
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 42,
+            "max": 42,
+            "avg": 42,
+            "med": 42,
+            "std": 0
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Run attestation command integration Tests",
+          "number": 9,
+          "runs_count": 6,
+          "conclusion": {
+            "failure": 6
+          },
+          "rate": {
+            "success_rate": 0,
+            "failure_rate": 1,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 3,
+            "avg": 1.1666666666666667,
+            "med": 1,
+            "std": 1.0671873729054748
+          },
+          "failure_html_url": [
+            "https://github.com/cli/cli/actions/runs/8178494723/job/22362522362",
+            "https://github.com/cli/cli/actions/runs/8178432563/job/22362314351",
+            "https://github.com/cli/cli/actions/runs/8178314603/job/22361955316",
+            "https://github.com/cli/cli/actions/runs/8178247079/job/22361739816",
+            "https://github.com/cli/cli/actions/runs/8178615249/job/22362923334",
+            "https://github.com/cli/cli/actions/runs/8178250009/job/22361747921"
+          ]
+        },
+        {
+          "name": "Post Restore Go modules cache",
+          "number": 12,
+          "runs_count": 93,
+          "conclusion": {
+            "others": 14,
+            "success": 79
+          },
+          "rate": {
+            "success_rate": 0.8494623655913979,
+            "failure_rate": 0,
+            "others_rate": 0.15053763440860213
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 9,
+            "avg": 0.43037974683544306,
+            "med": 0,
+            "std": 1.472821663766764
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Post Check out code",
+          "number": 13,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 1,
+            "avg": 0.043010752688172046,
+            "med": 0,
+            "std": 0.20288131466788403
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Post Set up Go 1.21",
+          "number": 14,
+          "runs_count": 93,
+          "conclusion": {
+            "others": 14,
+            "success": 79
+          },
+          "rate": {
+            "success_rate": 0.8494623655913979,
+            "failure_rate": 0,
+            "others_rate": 0.15053763440860213
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 1,
+            "avg": 0.012658227848101266,
+            "med": 0,
+            "std": 0.11179444134592216
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Complete job",
+          "number": 15,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 1,
+            "avg": 0.053763440860215055,
+            "med": 0,
+            "std": 0.2255502899290651
+          },
+          "failure_html_url": []
+        }
+      ]
+    },
+    {
+      "name": "build (windows-latest)",
+      "total_runs_count": 93,
+      "rate": {
+        "success_rate": 0.8709677419354839,
+        "failure_rate": 0.12903225806451613,
+        "others_rate": 0
+      },
+      "conclusions": {
+        "failure": 12,
+        "success": 81
+      },
+      "execution_duration_stats": {
+        "min": 352,
+        "max": 850,
+        "avg": 480.8641975308642,
+        "med": 450,
+        "std": 99.60499182870082
+      },
+      "steps_summary": [
+        {
+          "name": "Set up job",
+          "number": 1,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 1,
+            "max": 3,
+            "avg": 1.6236559139784945,
+            "med": 2,
+            "std": 0.6031098349410818
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Set up Go 1.21",
+          "number": 2,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 3,
+            "max": 53,
+            "avg": 8.763440860215054,
+            "med": 7,
+            "std": 6.624162108852099
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Check out code",
+          "number": 3,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 3,
+            "max": 12,
+            "avg": 4.182795698924731,
+            "med": 4,
+            "std": 1.163478623202063
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Restore Go modules cache",
+          "number": 4,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 19,
+            "max": 260,
+            "avg": 60.763440860215056,
+            "med": 45,
+            "std": 44.482544081307076
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Download dependencies",
+          "number": 5,
+          "runs_count": 93,
+          "conclusion": {
+            "failure": 2,
+            "success": 91
+          },
+          "rate": {
+            "success_rate": 0.978494623655914,
+            "failure_rate": 0.021505376344086023,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 22,
+            "avg": 0.8924731182795699,
+            "med": 0,
+            "std": 2.4690007799569287
+          },
+          "failure_html_url": [
+            "https://github.com/cli/cli/actions/runs/8117020991/job/22188310163",
+            "https://github.com/cli/cli/actions/runs/8116997610/job/22188235830"
+          ]
+        },
+        {
+          "name": "Run tests",
+          "number": 6,
+          "runs_count": 93,
+          "conclusion": {
+            "failure": 6,
+            "others": 2,
+            "success": 85
+          },
+          "rate": {
+            "success_rate": 0.9139784946236559,
+            "failure_rate": 0.06451612903225806,
+            "others_rate": 0.021505376344086058
+          },
+          "execution_duration_stats": {
+            "min": 276,
+            "max": 620,
+            "avg": 359.16483516483515,
+            "med": 344,
+            "std": 61.442417201524854
+          },
+          "failure_html_url": [
+            "https://github.com/cli/cli/actions/runs/8116985595/job/22188194271",
+            "https://github.com/cli/cli/actions/runs/8068240447/job/22040507179",
+            "https://github.com/cli/cli/actions/runs/8116985358/job/22188193401",
+            "https://github.com/cli/cli/actions/runs/8116020395/job/22185130105",
+            "https://github.com/cli/cli/actions/runs/8174112382/job/22348133113",
+            "https://github.com/cli/cli/actions/runs/8116020627/job/22185130973"
+          ]
+        },
+        {
+          "name": "Build",
+          "number": 7,
+          "runs_count": 93,
+          "conclusion": {
+            "others": 8,
+            "success": 85
+          },
+          "rate": {
+            "success_rate": 0.9139784946236559,
+            "failure_rate": 0,
+            "others_rate": 0.08602150537634412
+          },
+          "execution_duration_stats": {
+            "min": 37,
+            "max": 62,
+            "avg": 44.56470588235294,
+            "med": 40,
+            "std": 7.8985435125330055
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Build executable",
+          "number": 8,
+          "runs_count": 2,
+          "conclusion": {
+            "failure": 2
+          },
+          "rate": {
+            "success_rate": 0,
+            "failure_rate": 1,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 0,
+            "avg": 0,
+            "med": 0,
+            "std": 0
+          },
+          "failure_html_url": [
+            "https://github.com/cli/cli/actions/runs/8178494723/job/22362522725",
+            "https://github.com/cli/cli/actions/runs/8178615249/job/22362923737"
+          ]
+        },
+        {
+          "name": "Run attestation command integration Tests",
+          "number": 9,
+          "runs_count": 6,
+          "conclusion": {
+            "failure": 2,
+            "others": 2,
+            "success": 2
+          },
+          "rate": {
+            "success_rate": 0.3333333333333333,
+            "failure_rate": 0.3333333333333333,
+            "others_rate": 0.3333333333333334
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 1,
+            "avg": 0.25,
+            "med": 0,
+            "std": 0.4330127018922193
+          },
+          "failure_html_url": [
+            "https://github.com/cli/cli/actions/runs/8178247079/job/22361740207",
+            "https://github.com/cli/cli/actions/runs/8178250009/job/22361748166"
+          ]
+        },
+        {
+          "name": "Post Restore Go modules cache",
+          "number": 12,
+          "runs_count": 93,
+          "conclusion": {
+            "others": 12,
+            "success": 81
+          },
+          "rate": {
+            "success_rate": 0.8709677419354839,
+            "failure_rate": 0,
+            "others_rate": 0.12903225806451613
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 15,
+            "avg": 0.8765432098765432,
+            "med": 0,
+            "std": 2.530713635991271
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Post Check out code",
+          "number": 13,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 1,
+            "avg": 0.7956989247311828,
+            "med": 1,
+            "std": 0.403189962564574
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Post Set up Go 1.21",
+          "number": 14,
+          "runs_count": 93,
+          "conclusion": {
+            "others": 12,
+            "success": 81
+          },
+          "rate": {
+            "success_rate": 0.8709677419354839,
+            "failure_rate": 0,
+            "others_rate": 0.12903225806451613
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 1,
+            "avg": 0.1111111111111111,
+            "med": 0,
+            "std": 0.3142696805273545
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Complete job",
+          "number": 15,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 0,
+            "avg": 0,
+            "med": 0,
+            "std": 0
+          },
+          "failure_html_url": []
+        }
+      ]
+    },
+    {
+      "name": "build (macos-latest)",
+      "total_runs_count": 93,
+      "rate": {
+        "success_rate": 0.8494623655913979,
+        "failure_rate": 0.15053763440860216,
+        "others_rate": 0
+      },
+      "conclusions": {
+        "failure": 14,
+        "success": 79
+      },
+      "execution_duration_stats": {
+        "min": 196,
+        "max": 602,
+        "avg": 301.6455696202532,
+        "med": 266,
+        "std": 92.25803631761225
+      },
+      "steps_summary": [
+        {
+          "name": "Set up job",
+          "number": 1,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 2,
+            "max": 6,
+            "avg": 3.10752688172043,
+            "med": 3,
+            "std": 0.9667856685156568
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Set up Go 1.21",
+          "number": 2,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 3,
+            "max": 10,
+            "avg": 4.795698924731183,
+            "med": 4,
+            "std": 1.6497581431407027
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Check out code",
+          "number": 3,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 3,
+            "avg": 1.3655913978494623,
+            "med": 1,
+            "std": 0.6184431761096091
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Restore Go modules cache",
+          "number": 4,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 7,
+            "max": 45,
+            "avg": 16.537634408602152,
+            "med": 12,
+            "std": 8.779936977490701
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Download dependencies",
+          "number": 5,
+          "runs_count": 93,
+          "conclusion": {
+            "failure": 2,
+            "success": 91
+          },
+          "rate": {
+            "success_rate": 0.978494623655914,
+            "failure_rate": 0.021505376344086023,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 17,
+            "avg": 0.24731182795698925,
+            "med": 0,
+            "std": 1.7879880804640678
+          },
+          "failure_html_url": [
+            "https://github.com/cli/cli/actions/runs/8117020991/job/22188310423",
+            "https://github.com/cli/cli/actions/runs/8116997610/job/22188235988"
+          ]
+        },
+        {
+          "name": "Run tests",
+          "number": 6,
+          "runs_count": 93,
+          "conclusion": {
+            "failure": 6,
+            "others": 2,
+            "success": 85
+          },
+          "rate": {
+            "success_rate": 0.9139784946236559,
+            "failure_rate": 0.06451612903225806,
+            "others_rate": 0.021505376344086058
+          },
+          "execution_duration_stats": {
+            "min": 145,
+            "max": 464,
+            "avg": 214.98901098901098,
+            "med": 199,
+            "std": 57.194769319260274
+          },
+          "failure_html_url": [
+            "https://github.com/cli/cli/actions/runs/8116985595/job/22188194429",
+            "https://github.com/cli/cli/actions/runs/8068240447/job/22040507450",
+            "https://github.com/cli/cli/actions/runs/8116985358/job/22188193614",
+            "https://github.com/cli/cli/actions/runs/8116020395/job/22185130333",
+            "https://github.com/cli/cli/actions/runs/8174112382/job/22348133494",
+            "https://github.com/cli/cli/actions/runs/8116020627/job/22185131209"
+          ]
+        },
+        {
+          "name": "Build",
+          "number": 7,
+          "runs_count": 93,
+          "conclusion": {
+            "others": 8,
+            "success": 85
+          },
+          "rate": {
+            "success_rate": 0.9139784946236559,
+            "failure_rate": 0,
+            "others_rate": 0.08602150537634412
+          },
+          "execution_duration_stats": {
+            "min": 25,
+            "max": 185,
+            "avg": 55.38823529411765,
+            "med": 47,
+            "std": 31.81900805110683
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Build executable",
+          "number": 8,
+          "runs_count": 2,
+          "conclusion": {
+            "success": 2
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 51,
+            "max": 79,
+            "avg": 65,
+            "med": 65,
+            "std": 14
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Run attestation command integration Tests",
+          "number": 9,
+          "runs_count": 6,
+          "conclusion": {
+            "failure": 6
+          },
+          "rate": {
+            "success_rate": 0,
+            "failure_rate": 1,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 2,
+            "avg": 1,
+            "med": 1,
+            "std": 0.816496580927726
+          },
+          "failure_html_url": [
+            "https://github.com/cli/cli/actions/runs/8178494723/job/22362523001",
+            "https://github.com/cli/cli/actions/runs/8178432563/job/22362314886",
+            "https://github.com/cli/cli/actions/runs/8178314603/job/22361955852",
+            "https://github.com/cli/cli/actions/runs/8178247079/job/22361740468",
+            "https://github.com/cli/cli/actions/runs/8178615249/job/22362924033",
+            "https://github.com/cli/cli/actions/runs/8178250009/job/22361748390"
+          ]
+        },
+        {
+          "name": "Post Restore Go modules cache",
+          "number": 12,
+          "runs_count": 93,
+          "conclusion": {
+            "others": 14,
+            "success": 79
+          },
+          "rate": {
+            "success_rate": 0.8494623655913979,
+            "failure_rate": 0,
+            "others_rate": 0.15053763440860213
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 18,
+            "avg": 0.8227848101265823,
+            "med": 0,
+            "std": 2.750187536394363
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Post Check out code",
+          "number": 13,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 1,
+            "avg": 0.10752688172043011,
+            "med": 0,
+            "std": 0.3097819417395254
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Post Set up Go 1.21",
+          "number": 14,
+          "runs_count": 93,
+          "conclusion": {
+            "others": 14,
+            "success": 79
+          },
+          "rate": {
+            "success_rate": 0.8494623655913979,
+            "failure_rate": 0,
+            "others_rate": 0.15053763440860213
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 1,
+            "avg": 0.012658227848101266,
+            "med": 0,
+            "std": 0.11179444134592213
+          },
+          "failure_html_url": []
+        },
+        {
+          "name": "Complete job",
+          "number": 15,
+          "runs_count": 93,
+          "conclusion": {
+            "success": 93
+          },
+          "rate": {
+            "success_rate": 1,
+            "failure_rate": 0,
+            "others_rate": 0
+          },
+          "execution_duration_stats": {
+            "min": 0,
+            "max": 2,
+            "avg": 0.34408602150537637,
+            "med": 0,
+            "std": 0.5387086042957138
+          },
+          "failure_html_url": []
+        }
+      ]
+    }
+  ]
+}
