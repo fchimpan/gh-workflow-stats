@@ -1,0 +1,27 @@
+🏃 Total runs: 100
+  ✔ Success: 79 (79.0%)
+  ✖ Failure: 14 (14.0%)
+  🤔Others : 7 (7.0%)
+
+⏰ Workflow run execution time stats
+  Min: 365.0s
+  Max: 1080.0s
+  Avg: 505.5s
+  Med: 464.0s
+  Std: 120.8s
+
+📈 Top 3 jobs with the highest failure counts (failure runs / total runs)
+  build (macos-latest)
+    └──Run tests: 6/93
+
+  build (ubuntu-latest)
+    └──Run tests: 6/93
+
+  build (windows-latest)
+    └──Run tests: 6/93
+
+
+📊 Top 3 jobs with the longest execution average duration
+  build (windows-latest): 480.86s
+  build (macos-latest): 301.65s
+  build (ubuntu-latest): 185.24s
