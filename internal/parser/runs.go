@@ -90,7 +90,7 @@ func WorkflowRunsParse(wrs []*github.WorkflowRun) *WorkflowRunsStatsSummary {
 			HTMLURL:      wr.GetHTMLURL(),
 			RunStartedAt: wr.GetRunStartedAt().Time,
 		}
-		if c == ConclusionSuccess { // TODO: only calculate duration for success ??
+		if c == ConclusionSuccess {
 			d := wr.GetUpdatedAt().Sub(wr.GetRunStartedAt().Time).Seconds()
 			w.Duration = d
 			durations = append(durations, d)

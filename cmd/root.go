@@ -27,7 +27,7 @@ var (
 
 var rootCmd = &cobra.Command{
 	Use:     "workflow-stats",
-	Short:   "Get workflow runs stats. Retrieve the success rate, execution time, etc., of workflows.",
+	Short:   "Fetch workflow runs stats. Retrieve the success rate and execution time of workflows.",
 	Example: `$ gh workflow-stats --org=$OWNER --repo=$REPO -f ci.yaml`,
 	RunE: func(cmd *cobra.Command, _ []string) error {
 		if envHost := os.Getenv("GH_HOST"); envHost != "" && !cmd.Flags().Changed("host") {
