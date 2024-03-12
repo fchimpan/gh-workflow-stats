@@ -18,6 +18,8 @@ jobs:
         uses: golangci/golangci-lint-action@v4
         with:
           version: v1.54
+          skip-cache: true
+
   test:
     runs-on: ubuntu-latest
     steps:
