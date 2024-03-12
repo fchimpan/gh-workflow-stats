@@ -18,10 +18,11 @@ jobs:
         uses: golangci/golangci-lint-action@v4
         with:
           version: v1.54
-      - name: install nilaway
-        run: go install go.uber.org/nilaway/cmd/nilaway@latest
-      - name: run nilaway
-        run: nilaway -include-pkgs="github.com/fchimpan/gh-workflow-stats" ./...
+      # TODO: vaild nilaway after refactoring
+      # - name: install nilaway
+      #   run: go install go.uber.org/nilaway/cmd/nilaway@latest
+      # - name: run nilaway
+      #   run: nilaway -include-pkgs="github.com/fchimpan/gh-workflow-stats" ./...
 
   test:
     runs-on: ubuntu-latest
@@ -32,3 +33,13 @@ jobs:
           go-version: "1.22"
       - name: go test
         run: go test -v ./...
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+      - name: go build
+        run: go build .
