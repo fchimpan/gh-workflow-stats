@@ -14,11 +14,13 @@ type SpinnerOptions struct {
 	Color         string
 }
 
-func NewSpinner(opt SpinnerOptions) *Spinner {
+func NewSpinner(opt SpinnerOptions) (*Spinner, error) {
 	s := spinner.New(spinner.CharSets[opt.CharSetsIndex], 100*time.Millisecond)
 	s.Suffix = opt.Text
-	_ = s.Color(opt.Color)
-	return (*Spinner)(s)
+	if err := s.Color(opt.Color); err != nil {
+		return nil, err
+	}
+	return (*Spinner)(s), nil
 }
 
 func (s *Spinner) Start() {

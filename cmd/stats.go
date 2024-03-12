@@ -40,11 +40,14 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 		return err
 	}
 
-	s := printer.NewSpinner(printer.SpinnerOptions{
+	s, err := printer.NewSpinner(printer.SpinnerOptions{
 		Text:          "  fetching workflow runs...",
 		CharSetsIndex: 14,
 		Color:         "green",
 	})
+	if err != nil {
+		return err
+	}
 	s.Start()
 
 	runs, err := client.FetchWorkflowRuns(ctx, &github.WorkflowRunsConfig{
