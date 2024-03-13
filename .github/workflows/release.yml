@@ -12,7 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cli/gh-extension-precompile@v1
-        env:
-          CGO_ENABLED: 1 # https://github.com/cli/gh-extension-precompile/issues/50
         with:
-          go_version: "1.22"
+          go_version: "1.21" # https://github.com/cli/gh-extension-precompile/issues/50
