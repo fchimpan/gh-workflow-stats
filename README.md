@@ -120,6 +120,9 @@ This tool retrieves workflow execution statistics using the GitHub API. For more
 
 `Total runs` is the total number of workflow runs that `status` is `completed`. It includes `success`, `failure`, and `others` outcomes. `Others` outcomes include `cancelled`, `skipped`, etc.
 
+`Total runs` includes the results of attempts other than the latest.
+This means that for a workflow that succeeded on the third attempt, the results of the first and second workflow executions are also included in the calculation.
+
 ### ⏰ Workflow run execution time stats
 
 `Workflow run execution time stats` is the average execution time of workflows with **`success` conclusion and `completed` status**.
