@@ -47,13 +47,26 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 	if err != nil {
 		return nil, err
 	}
+
+	var w []*github.WorkflowRun
 	if resp.FirstPage == resp.LastPage || !opt.All {
-		return initRuns.WorkflowRuns, nil
+		for _, run := range initRuns.WorkflowRuns {
+			for a := 1; a <= run.GetRunAttempt(); a++ {
+				r, _, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, &github.WorkflowRunAttemptOptions{
+					ExcludePullRequests: &opt.ExcludePullRequests,
+				})
+				if err != nil {
+					return nil, err
+				}
+				w = append(w, r)
+			}
+		}
+		return w, nil
 	}
 
 	var wg sync.WaitGroup
 	wg.Add(resp.LastPage)
-	runsCh := make(chan []*github.WorkflowRun, resp.LastPage)
+	runsCh := make(chan []*github.WorkflowRun, *initRuns.TotalCount*10)
 	errCh := make(chan error, resp.LastPage)
 
 	for i := resp.FirstPage + 1; i <= resp.LastPage; i++ {
@@ -77,8 +90,18 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 			if err != nil {
 				errCh <- err
 			}
-			runsCh <- runs.WorkflowRuns
-
+			// runsCh <- runs.WorkflowRuns
+			var tmp []*github.WorkflowRun
+			for _, run := range runs.WorkflowRuns {
+				for a := 1; a <= run.GetRunAttempt(); a++ {
+					r, _, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, nil)
+					if err != nil {
+						errCh <- err
+					}
+					tmp = append(tmp, r)
+				}
+			}
+			runsCh <- tmp
 		}(i)
 	}
 	wg.Wait()

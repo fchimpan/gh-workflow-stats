@@ -29,12 +29,10 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 				<-sem
 				wg.Done()
 			}()
-			jobs, resp, err := c.client.Actions.ListWorkflowJobs(ctx, cfg.Org, cfg.Repo, run.GetID(), &github.ListWorkflowJobsOptions{
-				ListOptions: github.ListOptions{
-					PerPage: perPage,
-				},
-				Filter: "all",
-			})
+			jobs, resp, err := c.client.Actions.ListWorkflowJobsAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), int64(run.GetRunAttempt()), &github.ListOptions{
+				PerPage: perPage,
+			},
+			)
 			if err != nil || resp.StatusCode != http.StatusOK {
 				errCh <- err
 			} else if jobs == nil || jobs.Jobs == nil {
