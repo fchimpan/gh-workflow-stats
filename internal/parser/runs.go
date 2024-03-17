@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/google/go-github/v60/github"
@@ -38,6 +39,8 @@ type WorkflowRun struct {
 	Actor        string    `json:"actor"`
 	RunAttempt   int       `json:"run_attempt"`
 	HTMLURL      string    `json:"html_url"`
+	JobsURL      string    `json:"jobs_url"`
+	LogsURL      string    `json:"logs_url"`
 	RunStartedAt time.Time `json:"run_started_at"`
 	Duration     float64   `json:"duration"`
 }
@@ -87,7 +90,9 @@ func WorkflowRunsParse(wrs []*github.WorkflowRun) *WorkflowRunsStatsSummary {
 			Conclusion:   wr.GetConclusion(),
 			Actor:        wr.GetActor().GetLogin(),
 			RunAttempt:   wr.GetRunAttempt(),
-			HTMLURL:      wr.GetHTMLURL(),
+			HTMLURL:      wr.GetHTMLURL() + "/attempts/" + strconv.Itoa(wr.GetRunAttempt()),
+			JobsURL:      wr.GetJobsURL(),
+			LogsURL:      wr.GetLogsURL(),
 			RunStartedAt: wr.GetRunStartedAt().Time,
 		}
 		if c == ConclusionSuccess {
