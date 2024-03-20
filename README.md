@@ -6,6 +6,7 @@
 - Calculate the success rate and execution time of workflow runs
   - Average, median, minimum, and maximum execution time of successful runs
   - Detailed each runs
+    - Fetch the workflow runs and workflow runs attempts
     - Run ID, Actor, Started At, Duration(seconds), HTML URL
   - rate of success, failure, and others outcomes
 - Calculate the success rate and execution time of workflow job steps
@@ -61,7 +62,7 @@ Available Commands:
 
 Flags:
   -a, --actor string            Workflow run actor
-  -A, --all                     Target all workflows in the repository. If specified, default fetches of 100 workflow runs is overridden to all workflow runs.
+  -A, --all                     Target all workflows in the repository. If specified, default fetches of 100 workflow runs is overridden to all workflow runs. Note the GitHub API rate limit.
   -b, --branch string           Workflow run branch. Returns workflow runs associated with a branch. Use the name of the branch of the push.
   -C, --check-suite-id int      Workflow run check suite ID
   -c, --created string          Workflow run createdAt. Returns workflow runs created within the given date-time range.
@@ -72,7 +73,7 @@ Flags:
   -f, --file string             The name of the workflow file. e.g. ci.yaml. You can also pass the workflow id as a integer.
   -S, --head-sha string         Workflow run head SHA
   -h, --help                    help for workflow-stats
-  -H, --host string             GitHub host. If you want to use GitHub Enterprise Server, specify your GitHub Enterprise Server host. (default "github.com")
+  -H, --host string             GitHub host. If not specified, default is github.com. If you want to use GitHub Enterprise Server, specify your GitHub Enterprise Server host. (default "github.com")
   -i, --id int                  The ID of the workflow. You can also pass the workflow file name as a string. (default -1)
       --json                    Output as JSON
   -o, --org string              GitHub organization
@@ -85,7 +86,8 @@ Use "workflow-stats [command] --help" for more information about a command.
 
 ### Fetch number of workflow
 
-By default, `workflow-stats` and `workflow-stats jobs` commands will return **100** workflow runs. If you want to get all workflow runs, you can use the `--all` flag.
+By default, `workflow-stats` and `workflow-stats jobs` commands will return **100** workflow runs.
+If you want to get all workflow runs, you can use the `--all` flag.
 However, GitHub API has a rate limit, so please combine other parameters as appropriate to reduce the number of API requests.
 
 ```sh
@@ -120,8 +122,8 @@ This tool retrieves workflow execution statistics using the GitHub API. For more
 
 `Total runs` is the total number of workflow runs that `status` is `completed`. It includes `success`, `failure`, and `others` outcomes. `Others` outcomes include `cancelled`, `skipped`, etc.
 
-`Total runs` includes the results of attempts other than the latest.
-This means that for a workflow that succeeded on the third attempt, the results of the first and second workflow executions are also included in the calculation.
+**`Total runs` includes the results of attempts other than the latest.**
+This means that for a workflow that succeeds on the third attempt, the results of the first and second workflow executions are also included in the calculation.
 
 ### ⏰ Workflow run execution time stats
 
@@ -173,6 +175,7 @@ If you use `--json` flag, the output will be a JSON object with the following st
 ##### `execution_duration_stats` Object
 
 `execution_duration_stats` is the average execution time of workflows with `success` conclusion and `completed` status.
+In `post steps`, the execution time may be incorrect because GitHub API does not provide the duration of the workflow run.
 
 | Field Name | Type  | Description                            |
 | ---------- | ----- | -------------------------------------- |
@@ -184,11 +187,11 @@ If you use `--json` flag, the output will be a JSON object with the following st
 
 ##### `conclusions` Object
 
-| Key       | Description                                                                                                             |
-| --------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `failure` | Statistics for executions concluded as `failure`.                                                                       |
-| `others`  | Statistics for executions that do not fit into the typical success/failure categories. e.g `cancelled`, `skipped`, etc. |
-| `success` | Statistics for executions concluded as `success`.                                                                       |
+| Key       | Description                                                                                                                                                                                                                                                         |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `failure` | Statistics for executions concluded as `failure`.                                                                                                                                                                                                                   |
+| `others`  | Statistics for executions that do not fit into the typical success/failure categories. e.g `cancelled`, `skipped`, etc. More details in [GitHub API documentation](https://docs.github.com/en/enterprise-server@3.10/graphql/reference/enums#checkconclusionstate). |
+| `success` | Statistics for executions concluded as `success`.                                                                                                                                                                                                                   |
 
 ##### Conclusion Objects (`failure`, `others`, `success`)
 
@@ -207,6 +210,8 @@ If you use `--json` flag, the output will be a JSON object with the following st
 | `actor`          | String   | The actor who initiated the run.                                                                                                                                      |
 | `run_attempt`    | Integer  | The attempt number of the run.                                                                                                                                        |
 | `html_url`       | String   | The HTML URL to the run on GitHub.                                                                                                                                    |
+| `jobs_url`       | String   | The URL to the jobs of the run.                                                                                                                                       |
+| `logs_url`       | String   | The URL to the logs of the run.                                                                                                                                       |
 | `run_started_at` | DateTime | The start time of the run.                                                                                                                                            |
 | `duration`       | Integer  | The duration of the run in seconds. Duration defined as `RunUpdatedAt` - `RunStartedAt`. **Note**: GitHub API is not provide duration. Thus, this may be not correct. |
 
@@ -248,6 +253,8 @@ Each object in the `steps_summary` array includes:
 
 
 ### Sample JSON Output
+
+[Sample output](./sample/json-output.json)
 
 ```json
 {

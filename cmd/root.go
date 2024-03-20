@@ -28,7 +28,7 @@ var (
 var rootCmd = &cobra.Command{
 	Use:     "workflow-stats",
 	Short:   "Fetch workflow runs stats. Retrieve the success rate and execution time of workflows.",
-	Example: `$ gh workflow-stats --org=$OWNER --repo=$REPO -f ci.yaml`,
+	Example: `$ gh workflow-stats --org $OWNER --repo $REPO -f ci.yaml`,
 	RunE: func(cmd *cobra.Command, _ []string) error {
 		if envHost := os.Getenv("GH_HOST"); envHost != "" && !cmd.Flags().Changed("host") {
 			host = envHost
@@ -73,7 +73,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&repo, "repo", "r", "", "GitHub repository")
 	rootCmd.PersistentFlags().StringVarP(&fileName, "file", "f", "", "The name of the workflow file. e.g. ci.yaml. You can also pass the workflow id as a integer.")
 	rootCmd.PersistentFlags().Int64VarP(&id, "id", "i", -1, "The ID of the workflow. You can also pass the workflow file name as a string.")
-	rootCmd.PersistentFlags().BoolVarP(&all, "all", "A", false, "Target all workflows in the repository. If specified, default fetches of 100 workflow runs is overridden to all workflow runs.")
+	rootCmd.PersistentFlags().BoolVarP(&all, "all", "A", false, "Target all workflows in the repository. If specified, default fetches of 100 workflow runs is overridden to all workflow runs. Note the GitHub API rate limit.")
 	rootCmd.PersistentFlags().BoolVar(&js, "json", false, "Output as JSON")
 
 	// Workflow runs query parameters
