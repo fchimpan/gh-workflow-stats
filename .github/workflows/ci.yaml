@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "main.go"
+      - "internal/**"
+      - "cmd/**"
+      - ".github/workflows/ci.yml"
   pull_request:
 
 jobs:
