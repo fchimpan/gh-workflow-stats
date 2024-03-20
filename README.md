@@ -114,7 +114,7 @@ This tool retrieves workflow execution statistics using the GitHub API. For more
 
 ## Standard Output
 
-[Sample output](./images/sample-output.txt)
+[Sample output](./sample/std-output.txt)
 
 ### 🏃 Total runs
 
@@ -143,7 +143,7 @@ The number of jobs displayed can be changed with a command-line argument `-n`.
 
 ## JSON Schema Overview
 
-If you use `--json` flag, the output will be a JSON object with the following structure. You can see sample output in [sample-output.json](./images/sample-output.json).
+If you use `--json` flag, the output will be a JSON object with the following structure. You can see sample output in [json-output.json](./sample/json-output.json).
 
 ### Workflow runs
 
