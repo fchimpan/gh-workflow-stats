@@ -95,9 +95,9 @@ func WorkflowRunsParse(wrs []*github.WorkflowRun) *WorkflowRunsStatsSummary {
 			LogsURL:      wr.GetLogsURL(),
 			RunStartedAt: wr.GetRunStartedAt().Time,
 		}
+		d := wr.GetUpdatedAt().Sub(wr.GetRunStartedAt().Time).Seconds()
+		w.Duration = d
 		if c == ConclusionSuccess {
-			d := wr.GetUpdatedAt().Sub(wr.GetRunStartedAt().Time).Seconds()
-			w.Duration = d
 			durations = append(durations, d)
 		}
 		wfrss.Conclusions[c].WorkflowRuns = append(wfrss.Conclusions[c].WorkflowRuns, &w)
