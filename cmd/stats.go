@@ -49,6 +49,7 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 		return err
 	}
 	s.Start()
+	defer s.Stop()
 
 	runs, err := client.FetchWorkflowRuns(ctx, &github.WorkflowRunsConfig{
 		Org:              cfg.org,
