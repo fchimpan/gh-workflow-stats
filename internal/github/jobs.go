@@ -2,7 +2,6 @@ package github
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"runtime"
 	"sync"
@@ -33,13 +32,11 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 				PerPage: perPage,
 			},
 			)
-			if err != nil || resp.StatusCode != http.StatusOK {
+			if err != nil && resp.StatusCode != http.StatusNotFound {
 				errCh <- err
-			} else if jobs == nil || jobs.Jobs == nil {
-				errCh <- fmt.Errorf("no jobs found for run %d", run.GetID())
-			} else {
-				jobsCh <- jobs.Jobs
 			}
+			jobsCh <- jobs.Jobs
+
 		}(run)
 	}
 	wg.Wait()

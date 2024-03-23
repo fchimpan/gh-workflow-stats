@@ -2,6 +2,7 @@ package github
 
 import (
 	"context"
+	"net/http"
 	"sync"
 
 	"github.com/google/go-github/v60/github"
@@ -52,10 +53,10 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 	if resp.FirstPage == resp.LastPage || !opt.All {
 		for _, run := range initRuns.WorkflowRuns {
 			for a := 1; a <= run.GetRunAttempt(); a++ {
-				r, _, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, &github.WorkflowRunAttemptOptions{
+				r, resp, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, &github.WorkflowRunAttemptOptions{
 					ExcludePullRequests: &opt.ExcludePullRequests,
 				})
-				if err != nil {
+				if err != nil && resp.StatusCode != http.StatusNotFound {
 					return nil, err
 				}
 				w = append(w, r)
@@ -90,12 +91,11 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 			if err != nil {
 				errCh <- err
 			}
-			// runsCh <- runs.WorkflowRuns
 			var tmp []*github.WorkflowRun
 			for _, run := range runs.WorkflowRuns {
 				for a := 1; a <= run.GetRunAttempt(); a++ {
-					r, _, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, nil)
-					if err != nil {
+					r, resp, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, nil)
+					if err != nil && resp.StatusCode != http.StatusNotFound {
 						errCh <- err
 					}
 					tmp = append(tmp, r)
