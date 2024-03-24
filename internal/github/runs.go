@@ -52,10 +52,11 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 		return nil, err
 	}
 
-	var w []*github.WorkflowRun
+	w := make([]*github.WorkflowRun, 0, initRuns.GetTotalCount()*2)
+	w = append(w, initRuns.WorkflowRuns...)
 	if resp.FirstPage == resp.LastPage || !opt.All {
 		for _, run := range initRuns.WorkflowRuns {
-			for a := 1; a <= run.GetRunAttempt(); a++ {
+			for a := 1; a < run.GetRunAttempt(); a++ {
 				r, resp, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, &github.WorkflowRunAttemptOptions{
 					ExcludePullRequests: &opt.ExcludePullRequests,
 				})
@@ -99,9 +100,10 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 			} else if err != nil && resp.StatusCode != http.StatusNotFound {
 				errCh <- err
 			}
-			var tmp []*github.WorkflowRun
+			w := make([]*github.WorkflowRun, 0, runs.GetTotalCount()*2)
+			w = append(w, runs.WorkflowRuns...)
 			for _, run := range runs.WorkflowRuns {
-				for a := 1; a <= run.GetRunAttempt(); a++ {
+				for a := 1; a < run.GetRunAttempt(); a++ {
 					r, resp, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, nil)
 					if _, ok := err.(*github.RateLimitError); ok {
 						errCh <- RateLimitError{Err: err}
@@ -109,10 +111,10 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 					} else if err != nil && resp.StatusCode != http.StatusNotFound {
 						errCh <- err
 					}
-					tmp = append(tmp, r)
+					w = append(w, r)
 				}
 			}
-			runsCh <- tmp
+			runsCh <- w
 		}(i)
 	}
 	wg.Wait()
