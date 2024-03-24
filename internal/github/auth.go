@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/cli/go-gh/pkg/auth"
+	"github.com/gofri/go-github-ratelimit/github_ratelimit"
 	"github.com/google/go-github/v60/github"
 )
 
@@ -31,8 +32,12 @@ func NewClient(host string, authenticator Authenticator) (*WorkflowStatsClient, 
 	if err != nil {
 		return nil, err
 	}
+	r, err := github_ratelimit.NewRateLimitWaiterClient(nil)
+	if err != nil {
+		return nil, err
+	}
 
-	client := github.NewClient(nil).WithAuthToken(token)
+	client := github.NewClient(r).WithAuthToken(token)
 	if host != "github.com" {
 		client.BaseURL.Host = host
 		client.BaseURL.Path = "/api/v3/"

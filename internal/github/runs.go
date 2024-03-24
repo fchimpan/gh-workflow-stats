@@ -2,6 +2,7 @@ package github
 
 import (
 	"context"
+	"net/http"
 	"sync"
 
 	"github.com/google/go-github/v60/github"
@@ -45,6 +46,9 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 
 	initRuns, resp, err := c.listWorkflowRuns(ctx, cfg, o)
 	if err != nil {
+		if _, ok := err.(*github.RateLimitError); ok {
+			return nil, RateLimitError{Err: err}
+		}
 		return nil, err
 	}
 
@@ -52,10 +56,12 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 	if resp.FirstPage == resp.LastPage || !opt.All {
 		for _, run := range initRuns.WorkflowRuns {
 			for a := 1; a <= run.GetRunAttempt(); a++ {
-				r, _, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, &github.WorkflowRunAttemptOptions{
+				r, resp, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, &github.WorkflowRunAttemptOptions{
 					ExcludePullRequests: &opt.ExcludePullRequests,
 				})
-				if err != nil {
+				if _, ok := err.(*github.RateLimitError); ok {
+					return w, RateLimitError{Err: err}
+				} else if err != nil && resp.StatusCode != http.StatusNotFound {
 					return nil, err
 				}
 				w = append(w, r)
@@ -73,7 +79,7 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 		go func(i int) {
 			defer wg.Done()
 
-			runs, _, err := c.listWorkflowRuns(ctx, cfg, &github.ListWorkflowRunsOptions{
+			runs, resp, err := c.listWorkflowRuns(ctx, cfg, &github.ListWorkflowRunsOptions{
 				ListOptions: github.ListOptions{
 					Page:    i,
 					PerPage: perPage,
@@ -87,15 +93,20 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 				ExcludePullRequests: opt.ExcludePullRequests,
 				CheckSuiteID:        opt.CheckSuiteID,
 			})
-			if err != nil {
+			if _, ok := err.(*github.RateLimitError); ok {
+				errCh <- RateLimitError{Err: err}
+				return
+			} else if err != nil && resp.StatusCode != http.StatusNotFound {
 				errCh <- err
 			}
-			// runsCh <- runs.WorkflowRuns
 			var tmp []*github.WorkflowRun
 			for _, run := range runs.WorkflowRuns {
 				for a := 1; a <= run.GetRunAttempt(); a++ {
-					r, _, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, nil)
-					if err != nil {
+					r, resp, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), a, nil)
+					if _, ok := err.(*github.RateLimitError); ok {
+						errCh <- RateLimitError{Err: err}
+						return
+					} else if err != nil && resp.StatusCode != http.StatusNotFound {
 						errCh <- err
 					}
 					tmp = append(tmp, r)

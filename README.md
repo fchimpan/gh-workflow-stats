@@ -114,6 +114,13 @@ This tool retrieves workflow execution statistics using the GitHub API. For more
 - [Workflow runs](https://docs.github.com/en/rest/actions/workflow-runs?apiVersion=2022-11-28#list-workflow-runs-for-a-workflow)
 - [Workflow jobs](https://docs.github.com/en/rest/actions/workflow-jobs?apiVersion=2022-11-28#get-a-job-for-a-workflow-run)
 
+## Rate Limiting
+
+GitHub imposes a [primary rate limit](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28#about-primary-rate-limits) and a [secondary rate limit](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28#about-secondary-rate-limits) on all API clients.
+
+When you reach the primary rate limit, results are calculated based on successful fetches.
+In the secondary rate limit, this tool handles requests in a round-tripper to avoid the rate limit. Therefore, the execution time may be longer.
+
 ## Standard Output
 
 [Sample output](./sample/std-output.txt)
@@ -341,3 +348,4 @@ Each object in the `steps_summary` array includes:
 ]
 }
 ```
+
