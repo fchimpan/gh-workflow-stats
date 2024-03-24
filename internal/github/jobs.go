@@ -32,8 +32,14 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 				PerPage: perPage,
 			},
 			)
-			if err != nil && resp.StatusCode != http.StatusNotFound {
+			if _, ok := err.(*github.RateLimitError); ok {
+				errCh <- RateLimitError{Err: err}
+				return
+			} else if err != nil && resp.StatusCode != http.StatusNotFound {
 				errCh <- err
+			}
+			if jobs == nil || jobs.Jobs == nil {
+				return
 			}
 			jobsCh <- jobs.Jobs
 

@@ -4,10 +4,17 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
 
 	"github.com/fchimpan/gh-workflow-stats/internal/github"
 	"github.com/fchimpan/gh-workflow-stats/internal/parser"
 	"github.com/fchimpan/gh-workflow-stats/internal/printer"
+)
+
+const (
+	workflowRunsText = "  fetching workflow runs..."
+	workflowJobsText = "  fetching workflow jobs..."
+	charSize         = 14
 )
 
 type config struct {
@@ -41,8 +48,8 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 	}
 
 	s, err := printer.NewSpinner(printer.SpinnerOptions{
-		Text:          "  fetching workflow runs...",
-		CharSetsIndex: 14,
+		Text:          workflowRunsText,
+		CharSetsIndex: charSize,
 		Color:         "green",
 	})
 	if err != nil {
@@ -51,6 +58,7 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 	s.Start()
 	defer s.Stop()
 
+	isRateLimit := false
 	runs, err := client.FetchWorkflowRuns(ctx, &github.WorkflowRunsConfig{
 		Org:              cfg.org,
 		Repo:             cfg.repo,
@@ -69,14 +77,18 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 	},
 	)
 	if err != nil {
-		return err
+		if _, ok := err.(github.RateLimitError); ok {
+			isRateLimit = true
+		} else {
+			return err
+		}
 	}
 
 	var jobs []*parser.WorkflowJobsStatsSummary
 	if isJobs {
 		s.Update(printer.SpinnerOptions{
-			Text:          "  fetching workflow jobs...",
-			CharSetsIndex: 14,
+			Text:          workflowJobsText,
+			CharSetsIndex: charSize,
 			Color:         "pink",
 		})
 		j, err := client.FetchWorkflowJobsAttempts(ctx, runs, &github.WorkflowRunsConfig{
@@ -84,7 +96,11 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 			Repo: cfg.repo,
 		})
 		if err != nil {
-			return err
+			if _, ok := err.(github.RateLimitError); ok {
+				isRateLimit = true
+			} else {
+				return err
+			}
 		}
 		jobs = parser.WorkflowJobsParse(j)
 	}
@@ -107,6 +123,9 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 		}
 		fmt.Println(string(bytes))
 	} else {
+		if isRateLimit {
+			printer.RateLimitWarning(os.Stdout)
+		}
 		printer.Runs(wrs)
 		if isJobs {
 			printer.FailureJobs(jobs, opt.jobNum)
