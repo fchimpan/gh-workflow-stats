@@ -2,6 +2,7 @@ package github
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"runtime"
 	"sync"
@@ -34,11 +35,10 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 			)
 			if _, ok := err.(*github.RateLimitError); ok {
 				errCh <- RateLimitError{Err: err}
-				return
 			} else if err != nil && resp.StatusCode != http.StatusNotFound {
 				errCh <- err
 			}
-			if jobs == nil || jobs.Jobs == nil {
+			if jobs == nil || jobs.Jobs == nil || len(jobs.Jobs) == 0 {
 				return
 			}
 			jobsCh <- jobs.Jobs
@@ -49,9 +49,14 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 	close(jobsCh)
 	close(errCh)
 
+	var err error
 	for e := range errCh {
 		if e != nil {
-			return nil, e
+			if errors.As(e, &RateLimitError{}) {
+				err = e
+			} else {
+				return nil, e
+			}
 		}
 	}
 
@@ -59,5 +64,5 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 	for jobs := range jobsCh {
 		allJobs = append(allJobs, jobs...)
 	}
-	return allJobs, nil
+	return allJobs, err
 }

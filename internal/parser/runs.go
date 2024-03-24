@@ -42,6 +42,8 @@ type WorkflowRun struct {
 	JobsURL      string    `json:"jobs_url"`
 	LogsURL      string    `json:"logs_url"`
 	RunStartedAt time.Time `json:"run_started_at"`
+	UpdateAt     time.Time `json:"update_at"`
+	CreatedAt    time.Time `json:"created_at"`
 	Duration     float64   `json:"duration"`
 }
 
@@ -94,6 +96,8 @@ func WorkflowRunsParse(wrs []*github.WorkflowRun) *WorkflowRunsStatsSummary {
 			JobsURL:      wr.GetJobsURL(),
 			LogsURL:      wr.GetLogsURL(),
 			RunStartedAt: wr.GetRunStartedAt().Time,
+			UpdateAt:     wr.GetUpdatedAt().Time,
+			CreatedAt:    wr.GetCreatedAt().Time,
 		}
 		d := wr.GetUpdatedAt().Sub(wr.GetRunStartedAt().Time).Seconds()
 		w.Duration = d

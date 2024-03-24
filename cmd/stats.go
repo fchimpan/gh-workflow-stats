@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 
@@ -77,7 +78,7 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 	},
 	)
 	if err != nil {
-		if _, ok := err.(github.RateLimitError); ok {
+		if errors.As(err, &github.RateLimitError{}) {
 			isRateLimit = true
 		} else {
 			return err
@@ -96,7 +97,7 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 			Repo: cfg.repo,
 		})
 		if err != nil {
-			if _, ok := err.(github.RateLimitError); ok {
+			if errors.As(err, &github.RateLimitError{}) {
 				isRateLimit = true
 			} else {
 				return err
