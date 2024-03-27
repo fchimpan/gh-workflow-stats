@@ -16,7 +16,7 @@ type WorkflowJobsStatsSummary struct {
 	TotalRunsCount         int                    `json:"total_runs_count"`
 	Rate                   Rate                   `json:"rate"`
 	Conclusions            map[string]int         `json:"conclusions"`
-	ExecutionDurationStats executionDurationStats `json:"execution_duration_stats"`
+	ExecutionDurationStats ExecutionDurationStats `json:"execution_duration_stats"`
 	StepSummary            []*StepSummary         `json:"steps_summary"`
 }
 
@@ -26,7 +26,7 @@ type StepSummary struct {
 	RunsCount              int                    `json:"runs_count"`
 	Conclusions            map[string]int         `json:"conclusion"`
 	Rate                   Rate                   `json:"rate"`
-	ExecutionDurationStats executionDurationStats `json:"execution_duration_stats"`
+	ExecutionDurationStats ExecutionDurationStats `json:"execution_duration_stats"`
 	FailureHTMLURL         []string               `json:"failure_html_url"`
 }
 

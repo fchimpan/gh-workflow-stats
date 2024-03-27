@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/fchimpan/gh-workflow-stats/internal/github"
@@ -42,6 +43,7 @@ type options struct {
 
 func workflowStats(cfg config, opt options, isJobs bool) error {
 	ctx := context.Background()
+	w := io.Writer(os.Stdout)
 	a := &github.GitHubAuthenticator{}
 	client, err := github.NewClient(cfg.host, a)
 	if err != nil {
@@ -127,7 +129,7 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 		if isRateLimit {
 			printer.RateLimitWarning(os.Stdout)
 		}
-		printer.Runs(wrs)
+		printer.Runs(w, wrs)
 		if isJobs {
 			printer.FailureJobs(jobs, opt.jobNum)
 			printer.LongestDurationJobs(jobs, opt.jobNum)
