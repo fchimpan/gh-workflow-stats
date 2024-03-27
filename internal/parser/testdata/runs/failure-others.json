@@ -1,0 +1,38 @@
+{
+    "total_count": 2,
+    "workflow_runs": [
+      {
+        "id": 10000,
+        "name": "CI",
+        "status": "completed",
+        "conclusion": "failure",
+        "html_url": "https://github.com/owner/repos/actions/runs/10000",
+        "created_at": "2023-01-01T00:00:00Z",
+        "updated_at": "2024-01-01T00:00:20Z",
+        "run_started_at": "2023-01-01T00:00:00Z",
+        "run_attempt": 1,
+        "actor": {
+          "login": "test-user"
+        },
+        "jobs_url": "https://api.github.com/repos/owner/repos/actions/runs/10000/jobs",
+        "logs_url": "https://api.github.com/repos/owner/repos/actions/runs/10000/logs"
+      },
+      {
+        "id": 10001,
+        "name": "CI",
+        "status": "completed",
+        "conclusion": "other",
+        "html_url": "https://github.com/owner/repos/actions/runs/10001",
+        "created_at": "2024-01-01T00:00:00Z",
+        "updated_at": "2024-01-01T00:00:20Z",
+        "run_started_at": "2024-01-01T00:00:00Z",
+        "run_attempt": 1,
+        "actor": {
+          "login": "test-user"
+        },
+        "jobs_url": "https://api.github.com/repos/owner/repos/actions/runs/10001/jobs",
+        "logs_url": "https://api.github.com/repos/owner/repos/actions/runs/10001/logs"
+      }
+    ]
+  }
+  
