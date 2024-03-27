@@ -48,41 +48,35 @@ type WorkflowRun struct {
 }
 
 func WorkflowRunsParse(wrs []*github.WorkflowRun) *WorkflowRunsStatsSummary {
-	if len(wrs) == 0 {
-		return &WorkflowRunsStatsSummary{
-			TotalRunsCount: 0,
-		}
+	wfrss := &WorkflowRunsStatsSummary{
+		TotalRunsCount: 0,
+		Conclusions: map[string]*WorkflowRunsConclusion{
+			ConclusionSuccess: {
+				RunsCount:    0,
+				WorkflowRuns: []*WorkflowRun{},
+			},
+			ConclusionFailure: {
+				RunsCount:    0,
+				WorkflowRuns: []*WorkflowRun{},
+			},
+			ConclusionOthers: {
+				RunsCount:    0,
+				WorkflowRuns: []*WorkflowRun{},
+			},
+		},
 	}
-	wfrss := &WorkflowRunsStatsSummary{}
+	if len(wrs) == 0 {
+		return wfrss
+	}
+	wfrss.Name = wrs[0].GetName()
+
 	durations := make([]float64, 0, len(wrs))
 	for _, wr := range wrs {
 		c := wr.GetConclusion()
 		if c != ConclusionSuccess && c != ConclusionFailure {
 			c = ConclusionOthers
 		}
-		if wfrss.Conclusions == nil {
-			wfrss.Conclusions = map[string]*WorkflowRunsConclusion{
-				ConclusionSuccess: {
-					RunsCount:    0,
-					WorkflowRuns: []*WorkflowRun{},
-				},
-				ConclusionFailure: {
-					RunsCount:    0,
-					WorkflowRuns: []*WorkflowRun{},
-				},
-				ConclusionOthers: {
-					RunsCount:    0,
-					WorkflowRuns: []*WorkflowRun{},
-				}}
-			wfrss.Name = wr.GetName()
 
-		}
-		if _, ok := wfrss.Conclusions[c]; !ok {
-			wfrss.Conclusions[c] = &WorkflowRunsConclusion{
-				RunsCount:    0,
-				WorkflowRuns: []*WorkflowRun{},
-			}
-		}
 		wfrss.TotalRunsCount++
 		wfrss.Conclusions[c].RunsCount++
 
@@ -95,19 +89,24 @@ func WorkflowRunsParse(wrs []*github.WorkflowRun) *WorkflowRunsStatsSummary {
 			HTMLURL:      wr.GetHTMLURL() + "/attempts/" + strconv.Itoa(wr.GetRunAttempt()),
 			JobsURL:      wr.GetJobsURL(),
 			LogsURL:      wr.GetLogsURL(),
-			RunStartedAt: wr.GetRunStartedAt().Time,
-			UpdateAt:     wr.GetUpdatedAt().Time,
-			CreatedAt:    wr.GetCreatedAt().Time,
+			RunStartedAt: wr.GetRunStartedAt().Time.UTC(),
+			UpdateAt:     wr.GetUpdatedAt().Time.UTC(),
+			CreatedAt:    wr.GetCreatedAt().Time.UTC(),
 		}
+		// TODO: This is not the correct way to calculate the duration. https://github.com/fchimpan/gh-workflow-stats/issues/11
 		d := wr.GetUpdatedAt().Sub(wr.GetRunStartedAt().Time).Seconds()
+		// Maximum duration of a workflow run is 35 days in Self-hosted runners. ref: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners#usage-limits
+		if d > 35*24*60*60 {
+			d = 3024000
+		}
 		w.Duration = d
-		if c == ConclusionSuccess {
+		if c == ConclusionSuccess && d > 0 && wr.GetStatus() == "completed" {
 			durations = append(durations, d)
 		}
 		wfrss.Conclusions[c].WorkflowRuns = append(wfrss.Conclusions[c].WorkflowRuns, &w)
 	}
-	wfrss.ExecutionDurationStats = calcStats(durations)
 
+	wfrss.ExecutionDurationStats = calcStats(durations)
 	wfrss.Rate.SuccesRate = float64(wfrss.Conclusions[ConclusionSuccess].RunsCount) / max(float64(wfrss.TotalRunsCount), 1)
 	wfrss.Rate.FailureRate = float64(wfrss.Conclusions[ConclusionFailure].RunsCount) / max(float64(wfrss.TotalRunsCount), 1)
 	wfrss.Rate.OthersRate = float64(1 - wfrss.Rate.SuccesRate - wfrss.Rate.FailureRate)
