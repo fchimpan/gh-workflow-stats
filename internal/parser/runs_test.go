@@ -55,7 +55,7 @@ func TestWorkflowRunsParse(t *testing.T) {
 					FailureRate: 0,
 					OthersRate:  0,
 				},
-				ExecutionDurationStats: executionDurationStats{
+				ExecutionDurationStats: ExecutionDurationStats{
 					Min: 20.0,
 					Max: 40.0,
 					Avg: 30.0,
@@ -120,7 +120,7 @@ func TestWorkflowRunsParse(t *testing.T) {
 					FailureRate: 0.5,
 					OthersRate:  0.5,
 				},
-				ExecutionDurationStats: executionDurationStats{
+				ExecutionDurationStats: ExecutionDurationStats{
 					Min: 0,
 					Max: 0,
 					Avg: 0,
@@ -187,7 +187,7 @@ func TestWorkflowRunsParse(t *testing.T) {
 					FailureRate: 0.3333333333333333,
 					OthersRate:  0.3333333333333334,
 				},
-				ExecutionDurationStats: executionDurationStats{
+				ExecutionDurationStats: ExecutionDurationStats{
 					Min: 20.0,
 					Max: 20.0,
 					Avg: 20.0,

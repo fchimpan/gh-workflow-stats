@@ -8,7 +8,7 @@ import (
 
 const eps = 1e-9
 
-type executionDurationStats struct {
+type ExecutionDurationStats struct {
 	Min float64 `json:"min"`
 	Max float64 `json:"max"`
 	Avg float64 `json:"avg"`
@@ -16,9 +16,9 @@ type executionDurationStats struct {
 	Std float64 `json:"std"`
 }
 
-func calcStats(d []float64) executionDurationStats {
+func calcStats(d []float64) ExecutionDurationStats {
 	if len(d) == 0 {
-		return executionDurationStats{}
+		return ExecutionDurationStats{}
 	}
 	min := slices.Min(d)
 	max := slices.Max(d)
@@ -26,7 +26,7 @@ func calcStats(d []float64) executionDurationStats {
 	med, _ := stats.Median(d)
 	std, _ := stats.StandardDeviation(d)
 
-	return executionDurationStats{
+	return ExecutionDurationStats{
 		Min: min,
 		Max: max,
 		Avg: avg,

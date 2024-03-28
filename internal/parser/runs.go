@@ -17,7 +17,7 @@ type WorkflowRunsStatsSummary struct {
 	TotalRunsCount         int                                `json:"total_runs_count"`
 	Name                   string                             `json:"name"`
 	Rate                   Rate                               `json:"rate"`
-	ExecutionDurationStats executionDurationStats             `json:"execution_duration_stats"`
+	ExecutionDurationStats ExecutionDurationStats             `json:"execution_duration_stats"`
 	Conclusions            map[string]*WorkflowRunsConclusion `json:"conclusions"`
 }
 
