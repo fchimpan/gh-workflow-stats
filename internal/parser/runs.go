@@ -11,6 +11,7 @@ const (
 	ConclusionSuccess = "success"
 	ConclusionFailure = "failure"
 	ConclusionOthers  = "others"
+	StatusCompleted   = "completed"
 )
 
 type WorkflowRunsStatsSummary struct {
@@ -100,7 +101,7 @@ func WorkflowRunsParse(wrs []*github.WorkflowRun) *WorkflowRunsStatsSummary {
 			d = 3024000
 		}
 		w.Duration = d
-		if c == ConclusionSuccess && d > 0 && wr.GetStatus() == "completed" {
+		if c == ConclusionSuccess && d > 0 && wr.GetStatus() == StatusCompleted {
 			durations = append(durations, d)
 		}
 		wfrss.Conclusions[c].WorkflowRuns = append(wfrss.Conclusions[c].WorkflowRuns, &w)

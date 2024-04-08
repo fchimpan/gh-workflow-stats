@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "run_id": 10001,
+    "workflow_name": "CI",
+    "head_branch": "test",
+    "run_url": "https://api.github.com/repos/owner/repo/actions/runs/10001",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOK4OkS88AAAAFZNVyww",
+    "head_sha": "d6af9d32f7e6ca18056f814296aac173d41db62b",
+    "url": "https://api.github.com/repos/owner/repo/actions/jobs/1",
+    "html_url": "https://github.com/owner/repo/actions/runs/10001/job/1",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2024-01-01T00:00:00Z",
+    "started_at": "2024-01-01T00:00:00Z",
+    "completed_at": "2024-01-01T00:01:00Z",
+    "name": "test",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2024-01-01T00:00:00.000+00:00",
+        "completed_at": "2024-01-01T00:00:10.000+00:00"
+      },
+      {
+        "name": "Run test",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2024-01-01T00:00:10.000+00:00",
+        "completed_at": "2024-01-01T00:01:00.000+00:00"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2024-01-01T00:01:00.000+00:00",
+        "completed_at": "2024-01-01T00:01:00.000+00:00"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/owner/repo/check-runs/1",
+    "labels": ["ubuntu-latest"],
+    "runner_id": 4,
+    "runner_name": "GitHub Actions 4",
+    "runner_group_id": 2,
+    "runner_group_name": "GitHub Actions"
+  },
+  {
+    "id": 2,
+    "run_id": 10002,
+    "workflow_name": "CI",
+    "head_branch": "test",
+    "run_url": "https://api.github.com/repos/owner/repo/actions/runs/10002",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOK4OkS88AAAAFZNVyww",
+    "head_sha": "d6af9d32f7e6ca18056f814296aac173d41db62b",
+    "url": "https://api.github.com/repos/owner/repo/actions/jobs/2",
+    "html_url": "https://github.com/owner/repo/actions/runs/10002/job/2",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2024-01-01T00:00:00Z",
+    "started_at": "2024-01-01T00:00:00Z",
+    "completed_at": "2024-01-01T00:02:00Z",
+    "name": "test",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2024-01-01T00:00:00.000+00:00",
+        "completed_at": "2024-01-01T00:00:20.000+00:00"
+      },
+      {
+        "name": "Run test",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2024-01-01T00:00:20.000+00:00",
+        "completed_at": "2024-01-01T00:02:00.000+00:00"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2024-01-01T00:02:00.000+00:00",
+        "completed_at": "2024-01-01T00:02:00.000+00:00"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/owner/repo/check-runs/2",
+    "labels": ["ubuntu-latest"],
+    "runner_id": 4,
+    "runner_name": "GitHub Actions 4",
+    "runner_group_id": 2,
+    "runner_group_name": "GitHub Actions"
+  }
+]

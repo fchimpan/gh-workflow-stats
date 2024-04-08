@@ -57,9 +57,16 @@ func WorkflowJobsParse(wjs []*github.WorkflowJob) []*WorkflowJobsStatsSummary {
 	for _, wj := range wjs {
 		if _, ok := m[wj.GetName()]; !ok {
 			m[wj.GetName()] = &WorkflowJobsStatsSummaryCalc{
-				Name:        wj.GetName(),
-				StepSummary: make(map[string]*StepSummaryCalc),
-				Conclusions: make(map[string]int),
+				TotalRunsCount: 0,
+				Name:           wj.GetName(),
+				Rate:           Rate{},
+				Conclusions: map[string]int{
+					ConclusionSuccess: 0,
+					ConclusionFailure: 0,
+					ConclusionOthers:  0,
+				},
+				ExecutionWorkflowDuration: []float64{},
+				StepSummary:               make(map[string]*StepSummaryCalc),
 			}
 		}
 		w := m[wj.GetName()]
@@ -69,7 +76,8 @@ func WorkflowJobsParse(wjs []*github.WorkflowJob) []*WorkflowJobsStatsSummary {
 			c = ConclusionOthers
 		}
 		w.Conclusions[c]++
-		if wj.GetStatus() == "completed" && c == ConclusionSuccess {
+
+		if wj.GetStatus() == StatusCompleted && c == ConclusionSuccess {
 			d := wj.GetCompletedAt().Sub(wj.GetStartedAt().Time).Seconds()
 			if d < 0 {
 				d = 0
@@ -80,10 +88,16 @@ func WorkflowJobsParse(wjs []*github.WorkflowJob) []*WorkflowJobsStatsSummary {
 		for _, s := range wj.Steps {
 			if _, ok := w.StepSummary[s.GetName()]; !ok {
 				w.StepSummary[s.GetName()] = &StepSummaryCalc{
-					Name:           s.GetName(),
-					Number:         s.GetNumber(),
-					Conclusions:    make(map[string]int),
+					Name:      s.GetName(),
+					Number:    s.GetNumber(),
+					RunsCount: 0,
+					Conclusions: map[string]int{
+						ConclusionSuccess: 0,
+						ConclusionFailure: 0,
+						ConclusionOthers:  0,
+					},
 					FailureHTMLURL: []string{},
+					StepDuration:   []float64{},
 				}
 			}
 			ss := w.StepSummary[s.GetName()]
@@ -93,10 +107,10 @@ func WorkflowJobsParse(wjs []*github.WorkflowJob) []*WorkflowJobsStatsSummary {
 				c = ConclusionOthers
 			}
 			ss.Conclusions[c]++
-			if s.GetStatus() == "completed" && s.GetConclusion() == ConclusionFailure {
+			if s.GetStatus() == StatusCompleted && c == ConclusionFailure {
 				ss.FailureHTMLURL = append(ss.FailureHTMLURL, wj.GetHTMLURL())
 			}
-			if s.GetStatus() == "completed" && (c == ConclusionSuccess || c == ConclusionFailure) {
+			if s.GetStatus() == StatusCompleted && (c == ConclusionSuccess || c == ConclusionFailure) {
 				d := s.GetCompletedAt().Sub(s.GetStartedAt().Time).Seconds()
 				if d < 0 {
 					d = 0
@@ -107,11 +121,13 @@ func WorkflowJobsParse(wjs []*github.WorkflowJob) []*WorkflowJobsStatsSummary {
 		}
 		m[wj.GetName()] = w
 	}
+
 	res := make([]*WorkflowJobsStatsSummary, 0, len(m))
 	for _, w := range m {
 		wjs := &WorkflowJobsStatsSummary{
 			Name:                   w.Name,
 			TotalRunsCount:         w.TotalRunsCount,
+			Rate:                   Rate{},
 			Conclusions:            w.Conclusions,
 			StepSummary:            make([]*StepSummary, 0, len(w.StepSummary)),
 			ExecutionDurationStats: calcStats(w.ExecutionWorkflowDuration),
