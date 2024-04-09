@@ -131,8 +131,8 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 		}
 		printer.Runs(w, wrs)
 		if isJobs {
-			printer.FailureJobs(jobs, opt.jobNum)
-			printer.LongestDurationJobs(jobs, opt.jobNum)
+			printer.FailureJobs(w, jobs, opt.jobNum)
+			printer.LongestDurationJobs(w, jobs, opt.jobNum)
 		}
 	}
 
