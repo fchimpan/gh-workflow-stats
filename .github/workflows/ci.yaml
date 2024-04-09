@@ -52,5 +52,7 @@ jobs:
         run: go build .
       - name: gh install
         run: gh extension install .
-      - name: test execute
+      - name: test execute gh workflow-stats standard
         run: gh workflow-stats jobs -o fchimpan -r gh-workflow-stats -f ci.yaml
+      - name: test execute gh workflow-stats json
+        run: gh workflow-stats jobs -o fchimpan -r gh-workflow-stats -f ci.yaml --json
