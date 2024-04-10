@@ -1,6 +1,22 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":timezone(Asia/Tokyo)",
+    "schedule:weekly",
+    ":semanticCommitTypeAll(chore)"
+  ],
+  "automerge": true,
+  "labels": [
+    "renovate"
+  ],
+  "postUpdateOptions": [
+    "gomodTidy"
+  ],
+  "packageRules": [
+    {
+      "groupName": "go-libraries",
+      "matchManagers": ["gomod"]
+    }
   ]
 }
