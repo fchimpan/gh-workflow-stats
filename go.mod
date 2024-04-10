@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/briandowns/spinner v1.23.0
-	github.com/cli/go-gh v1.2.1
+	github.com/cli/go-gh/v2 v2.8.0
 	github.com/cli/go-gh/v2 v2.8.0
 	github.com/fatih/color v1.16.0
 	github.com/gofri/go-github-ratelimit v1.1.0
