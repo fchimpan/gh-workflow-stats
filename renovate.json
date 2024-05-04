@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    ":timezone(Asia/Tokyo)",
     "schedule:weekly",
     ":semanticCommitTypeAll(chore)"
   ],
@@ -17,6 +16,17 @@
     {
       "groupName": "go-libraries",
       "matchManagers": ["gomod"]
+    }
+  ],
+  "customManagers": [
+    {
+      "fileMatch": ["\\.go$"],
+      "matchStrings": [
+        "\"github.com/google/go-github/v(?<currentValue>\\d+)/github\""
+      ],
+      "datasourceTemplate": "go",
+      "versioningTemplate": "semver",
+      "depNameTemplate": "github.com/google/go-github"
     }
   ]
 }
