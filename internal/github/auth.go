@@ -3,7 +3,7 @@ package github
 import (
 	"fmt"
 
-	"github.com/cli/go-gh/v2/pkg/auth"
+	"github.com/cli/go-gh/pkg/auth"
 	"github.com/gofri/go-github-ratelimit/github_ratelimit"
 	"github.com/google/go-github/v60/github"
 )
