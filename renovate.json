@@ -16,21 +16,17 @@
     {
       "groupName": "go-libraries",
       "matchManagers": ["gomod"]
-    },
+    }
+  ],
+  "customManagers": [
     {
-      "matchDepTypes": ["dependency"],
-      "matchUpdateTypes": ["major", "minor", "patch"],
-      "matchPackagePatterns": ["^github.com/google/go-github$"],
-      "customManagers": [
-        {
-          "fileMatch": ["\\.go$"],
-          "matchStrings": [
-            "\"github.com/google/go-github/v(?<currentValue>\\d+)/github\""
-          ],
-          "datasourceTemplate": "go",
-          "versioningTemplate": "semver"
-        }
-      ]
+      "fileMatch": ["\\.go$"],
+      "matchStrings": [
+        "\"github.com/google/go-github/v(?<currentValue>\\d+)/github\""
+      ],
+      "datasourceTemplate": "go",
+      "versioningTemplate": "semver",
+      "depNameTemplate": "github.com/google/go-github"
     }
   ]
 }
