@@ -8,6 +8,7 @@ require (
 	github.com/fatih/color v1.16.0
 	github.com/gofri/go-github-ratelimit v1.1.0
 	github.com/google/go-github/v60 v60.0.0
+	github.com/google/go-github/v61 v61.0.0
 	github.com/montanaflynn/stats v0.7.1
 	github.com/spf13/cobra v1.8.0
 	github.com/stretchr/testify v1.9.0
