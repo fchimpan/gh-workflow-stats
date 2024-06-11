@@ -84,7 +84,16 @@ Flags:
 Use "workflow-stats [command] --help" for more information about a command.
 ```
 
-### Fetch number of workflow
+### Fetch workflow ID
+
+For the `--id` flag, you can list the workflow IDs with the standard `gh` CLI: `gh workflow list`, e.g.:
+```
+NAME                             STATE   ID
+AAAA                             active  123456
+BBBB                             active  543112
+```
+
+### Fetch all workflow runs
 
 By default, `workflow-stats` and `workflow-stats jobs` commands will return **100** workflow runs.
 If you want to get all workflow runs, you can use the `--all` flag.
