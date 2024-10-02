@@ -7,10 +7,13 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"slices"
 
 	"github.com/fchimpan/gh-workflow-stats/internal/github"
 	"github.com/fchimpan/gh-workflow-stats/internal/parser"
 	"github.com/fchimpan/gh-workflow-stats/internal/printer"
+
+	go_github "github.com/google/go-github/v60/github"
 )
 
 const (
@@ -31,7 +34,7 @@ type options struct {
 	actor               string
 	branch              string
 	event               string
-	status              string
+	status              []string
 	created             string
 	headSHA             string
 	excludePullRequests bool
@@ -62,23 +65,7 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 	defer s.Stop()
 
 	isRateLimit := false
-	runs, err := client.FetchWorkflowRuns(ctx, &github.WorkflowRunsConfig{
-		Org:              cfg.org,
-		Repo:             cfg.repo,
-		WorkflowFileName: cfg.workflowFileName,
-		WorkflowID:       cfg.workflowID,
-	}, &github.WorkflowRunsOptions{
-		All:                 opt.all,
-		Actor:               opt.actor,
-		Branch:              opt.branch,
-		Event:               opt.event,
-		Status:              opt.status,
-		Created:             opt.created,
-		HeadSHA:             opt.headSHA,
-		ExcludePullRequests: opt.excludePullRequests,
-		CheckSuiteID:        opt.checkSuiteID,
-	},
-	)
+	runs, err := fetchWorkflowRuns(ctx, client, cfg, opt)
 	if err != nil {
 		if errors.As(err, &github.RateLimitError{}) {
 			isRateLimit = true
@@ -137,4 +124,44 @@ func workflowStats(cfg config, opt options, isJobs bool) error {
 	}
 
 	return nil
+}
+
+func fetchWorkflowRuns(ctx context.Context, client *github.WorkflowStatsClient, cfg config, opt options) ([]*go_github.WorkflowRun, error) {
+	// Intentionally not using Github API status filter as it applies only to the last run attempt.
+	// Instead retrieving all qualifying workflow runs and their run attempts and filtering by status manually (if needed)
+	runs, err := client.FetchWorkflowRuns(ctx, &github.WorkflowRunsConfig{
+		Org:              cfg.org,
+		Repo:             cfg.repo,
+		WorkflowFileName: cfg.workflowFileName,
+		WorkflowID:       cfg.workflowID,
+	}, &github.WorkflowRunsOptions{
+		All:                 opt.all,
+		Actor:               opt.actor,
+		Branch:              opt.branch,
+		Event:               opt.event,
+		Status:              "",
+		Created:             opt.created,
+		HeadSHA:             opt.headSHA,
+		ExcludePullRequests: opt.excludePullRequests,
+		CheckSuiteID:        opt.checkSuiteID,
+	},
+	)
+	if err == nil {
+		return filterRunAttemptsByStatus(runs, opt.status), nil
+	} else {
+		return nil, err
+	}
+}
+
+func filterRunAttemptsByStatus(runs []*go_github.WorkflowRun, status []string) []*go_github.WorkflowRun {
+	if len(status) == 0 || (len(status) == 1 && status[0] == "") {
+		return runs
+	}
+	filteredRuns := []*go_github.WorkflowRun{}
+	for _, r := range runs {
+		if (r.Status != nil && slices.Contains(status, *r.Status)) || (r.Conclusion != nil && slices.Contains(status, *r.Conclusion)) {
+			filteredRuns = append(filteredRuns, r)
+		}
+	}
+	return filteredRuns
 }
