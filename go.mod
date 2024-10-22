@@ -4,8 +4,8 @@ go 1.21
 
 require (
 	github.com/briandowns/spinner v1.23.1
-	github.com/cli/go-gh/v2 v2.10.0
-	github.com/fatih/color v1.17.0
+	github.com/cli/go-gh/v2 v2.11.0
+	github.com/fatih/color v1.18.0
 	github.com/gofri/go-github-ratelimit v1.1.0
 	github.com/google/go-github/v60 v60.0.0
 	github.com/montanaflynn/stats v0.7.1
@@ -24,7 +24,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
-	golang.org/x/sys v0.19.0 // indirect
+	golang.org/x/sys v0.25.0 // indirect
 	golang.org/x/term v0.13.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
