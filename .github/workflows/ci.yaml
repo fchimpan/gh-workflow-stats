@@ -22,7 +22,7 @@ jobs:
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
-          version: v1.54
+          version: latest
       # TODO: vaild nilaway after refactoring
       # - name: install nilaway
       #   run: go install go.uber.org/nilaway/cmd/nilaway@latest
