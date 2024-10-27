@@ -1,6 +1,6 @@
 module github.com/fchimpan/gh-workflow-stats
 
-go 1.21
+go 1.23.0
 
 require (
 	github.com/briandowns/spinner v1.23.1
