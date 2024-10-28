@@ -18,7 +18,7 @@ var (
 	actor               string
 	branch              string
 	event               string
-	status              string
+	status              []string
 	created             string
 	headSHA             string
 	excludePullRequests bool
@@ -81,7 +81,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&actor, "actor", "a", "", "Workflow run actor")
 	rootCmd.PersistentFlags().StringVarP(&branch, "branch", "b", "", "Workflow run branch. Returns workflow runs associated with a branch. Use the name of the branch of the push.")
 	rootCmd.PersistentFlags().StringVarP(&event, "event", "e", "", "Workflow run event. e.g. push, pull_request, pull_request_target, etc.\n See https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows")
-	rootCmd.PersistentFlags().StringVarP(&status, "status", "s", "", "Workflow run status. e.g. completed, in_progress, queued, etc.\n See https://docs.github.com/en/rest/reference/actions#list-workflow-runs-for-a-repository")
+	rootCmd.PersistentFlags().StringSliceVarP(&status, "status", "s", []string{""}, "Workflow run status. e.g. completed, in_progress, queued, etc.\n Multiple values can be provided separated by a comma. For a full list of supported values see https://docs.github.com/en/rest/reference/actions#list-workflow-runs-for-a-repository")
 	rootCmd.PersistentFlags().StringVarP(&created, "created", "c", "", "Workflow run createdAt. Returns workflow runs created within the given date-time range.\n For more information on the syntax, see https://docs.github.com/en/search-github/getting-started-with-searching-on-github/understanding-the-search-syntax#query-for-dates")
 	rootCmd.PersistentFlags().StringVarP(&headSHA, "head-sha", "S", "", "Workflow run head SHA")
 	rootCmd.PersistentFlags().BoolVarP(&excludePullRequests, "exclude-pull-requests", "x", false, "Workflow run exclude pull requests")
