@@ -14,7 +14,7 @@ func FailureJobs(w io.Writer, jobs []*parser.WorkflowJobsStatsSummary, n int) {
 		return jobs[i].Conclusions[parser.ConclusionFailure] > jobs[j].Conclusions[parser.ConclusionFailure]
 	})
 	jobsNum := min(len(jobs), n)
-	fmt.Fprintf(w, "\n%s Top %d jobs with the highest failure counts (failure jobs / total runs)\n", "\U0001F4C8", jobsNum)
+	_, _ = fmt.Fprintf(w, "\n%s Top %d jobs with the highest failure counts (failure jobs / total runs)\n", "\U0001F4C8", jobsNum)
 
 	cnt := 0
 	red := color.New(color.FgRed).SprintFunc()
@@ -37,8 +37,8 @@ func FailureJobs(w io.Writer, jobs []*parser.WorkflowJobsStatsSummary, n int) {
 			maxFailuresStepName = "Failed step not found"
 		}
 
-		fmt.Fprintf(w, "  %s: %d/%d\n", cyan(job.Name), job.Conclusions[parser.ConclusionFailure], job.TotalRunsCount)
-		fmt.Fprintf(w, "    └──%s: %s\n\n", purple(maxFailuresStepName), red(fmt.Sprintf("%d/%d", maxFailuresStepCount, maxTotalStepCount)))
+		_, _ = fmt.Fprintf(w, "  %s: %d/%d\n", cyan(job.Name), job.Conclusions[parser.ConclusionFailure], job.TotalRunsCount)
+		_, _ = fmt.Fprintf(w, "    └──%s: %s\n\n", purple(maxFailuresStepName), red(fmt.Sprintf("%d/%d", maxFailuresStepCount, maxTotalStepCount)))
 
 		cnt++
 		if cnt >= jobsNum {
@@ -52,13 +52,13 @@ func LongestDurationJobs(w io.Writer, jobs []*parser.WorkflowJobsStatsSummary, n
 		return jobs[i].ExecutionDurationStats.Avg > jobs[j].ExecutionDurationStats.Avg
 	})
 	jobsNum := min(len(jobs), n)
-	fmt.Fprintf(w, "\n%s Top %d jobs with the longest execution average duration\n", "\U0001F4CA", jobsNum)
+	_, _ = fmt.Fprintf(w, "\n%s Top %d jobs with the longest execution average duration\n", "\U0001F4CA", jobsNum)
 
 	red := color.New(color.FgRed).SprintFunc()
 	cyan := color.New(color.FgCyan).SprintFunc()
 
 	for i := 0; i < jobsNum; i++ {
 		job := jobs[i]
-		fmt.Fprintf(w, "  %s: %s\n", cyan(job.Name), red(fmt.Sprintf("%.2fs", job.ExecutionDurationStats.Avg)))
+		_, _ = fmt.Fprintf(w, "  %s: %s\n", cyan(job.Name), red(fmt.Sprintf("%.2fs", job.ExecutionDurationStats.Avg)))
 	}
 }

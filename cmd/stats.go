@@ -6,10 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"os"
 	"slices"
 
 	"github.com/fchimpan/gh-workflow-stats/internal/github"
+	"github.com/fchimpan/gh-workflow-stats/internal/logger"
 	"github.com/fchimpan/gh-workflow-stats/internal/parser"
 	"github.com/fchimpan/gh-workflow-stats/internal/printer"
 
@@ -47,9 +49,40 @@ type options struct {
 func workflowStats(cfg config, opt options, isJobs bool) error {
 	ctx := context.Background()
 	w := io.Writer(os.Stdout)
+
+	// Initialize logger based on output format and debug flags
+	var log logger.Logger
+	if opt.js {
+		// Use no-op logger for JSON output to avoid interfering with JSON
+		log = logger.NewNoOpLogger()
+	} else {
+		// Determine log level based on flags
+		logLevel := determineLogLevel()
+		if logLevel == slog.Level(100) { // Custom level for no logging
+			// Use no-op logger when logging is disabled
+			log = logger.NewNoOpLogger()
+		} else {
+			// Use stderr for logging so it doesn't interfere with normal output
+			log = logger.NewLogger(logLevel, os.Stderr)
+		}
+	}
+
+	log.Info("starting workflow stats",
+		"org", cfg.org,
+		"repo", cfg.repo,
+		"host", cfg.host,
+		"workflow_file", cfg.workflowFileName,
+		"workflow_id", cfg.workflowID,
+		"is_jobs", isJobs,
+		"output_json", opt.js,
+	)
+
 	a := &github.GitHubAuthenticator{}
-	client, err := github.NewClient(cfg.host, a)
+	client, err := github.NewClient(cfg.host, a, log)
 	if err != nil {
+		github.LogError(log, err, "client_creation", map[string]interface{}{
+			"host": cfg.host,
+		})
 		return err
 	}
 
@@ -146,11 +179,16 @@ func fetchWorkflowRuns(ctx context.Context, client *github.WorkflowStatsClient, 
 		CheckSuiteID:        opt.checkSuiteID,
 	},
 	)
-	if err == nil {
-		return filterRunAttemptsByStatus(runs, opt.status), nil
-	} else {
+	if err != nil {
+		// Check if we have partial results (e.g., from rate limiting)
+		if len(runs) > 0 {
+			// Return partial results with status filtering applied
+			return filterRunAttemptsByStatus(runs, opt.status), err
+		}
 		return nil, err
 	}
+
+	return filterRunAttemptsByStatus(runs, opt.status), nil
 }
 
 func filterRunAttemptsByStatus(runs []*go_github.WorkflowRun, status []string) []*go_github.WorkflowRun {
@@ -164,4 +202,15 @@ func filterRunAttemptsByStatus(runs []*go_github.WorkflowRun, status []string) [
 		}
 	}
 	return filteredRuns
+}
+
+func determineLogLevel() slog.Level {
+	if debug {
+		return slog.LevelDebug
+	}
+	if verbose {
+		return slog.LevelInfo
+	}
+	// Return a custom high level to indicate no logging
+	return slog.Level(100)
 }

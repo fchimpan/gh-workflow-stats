@@ -3,21 +3,30 @@
 ✨ A GitHub CLI extension to calculate the success rate and execution time of workflows and jobs.
 
 ![demo.gif](./images/demo.gif)
-- Calculate the success rate and execution time of workflow runs
+
+## Features
+
+- **Workflow Run Analysis**
+  - Calculate the success rate and execution time of workflow runs
   - Average, median, minimum, and maximum execution time of successful runs
-  - Detailed each runs
-    - Fetch the workflow runs and workflow runs attempts
-    - Run ID, Actor, Started At, Duration(seconds), HTML URL
-  - rate of success, failure, and others outcomes
-- Calculate the success rate and execution time of workflow job steps
+  - Detailed statistics for each run (Run ID, Actor, Started At, Duration, HTML URL)
+  - Fetch workflow runs and workflow run attempts
+  - Rate of success, failure, and others outcomes
+  
+- **Workflow Job Analysis**
+  - Calculate the success rate and execution time of workflow job steps
   - Average, median, minimum, and maximum execution time of successful jobs
-  - Detailed each jobs
-    - rate of success, failure, and others outcomes for each step
-    - Detailed each steps
-      - Step name, Step number, Runs count, Conclusion, Rate, Execution duration, Failure HTML URL
-  - Most failed steps
-  - Most time-consuming steps
-- This tool can use composite action and reusable workflow.
+  - Detailed statistics for each job and step
+  - Step-level analysis (Step name, Step number, Runs count, Conclusion, Rate, Execution duration, Failure HTML URL)
+  - Most failed steps identification
+  - Most time-consuming steps analysis
+
+- **Advanced Features**
+  - Support for composite actions and reusable workflows
+  - Multiple output formats (human-readable and JSON)
+  - Comprehensive filtering options (actor, branch, event, status, date range)
+  - Debug and verbose logging modes
+  - GitHub Enterprise Server support
 
 
 ## Installation
@@ -40,6 +49,16 @@ If you want to get the success rate and execution time of a workflow job in JSON
 
 ```sh
 $ gh workflow-stats jobs -o $OWNER -r $REPO -f ci.yaml --json
+```
+
+If you want to debug issues or see detailed operation logs:
+
+```sh
+# With verbose logging
+$ gh workflow-stats -o $OWNER -r $REPO -f ci.yaml --verbose
+
+# With debug logging
+$ gh workflow-stats -o $OWNER -r $REPO -f ci.yaml --debug
 ```
 
 ## Usage
@@ -67,6 +86,7 @@ Flags:
   -C, --check-suite-id int      Workflow run check suite ID
   -c, --created string          Workflow run createdAt. Returns workflow runs created within the given date-time range.
                                  For more information on the syntax, see https://docs.github.com/en/search-github/getting-started-with-searching-on-github/understanding-the-search-syntax#query-for-dates
+  -d, --debug                   Enable debug mode with detailed logging
   -e, --event string            Workflow run event. e.g. push, pull_request, pull_request_target, etc.
                                  See https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
   -x, --exclude-pull-requests   Workflow run exclude pull requests
@@ -78,8 +98,9 @@ Flags:
       --json                    Output as JSON
   -o, --org string              GitHub organization
   -r, --repo string             GitHub repository
-  -s, --status string           Workflow run status. e.g. completed, in_progress, queued, etc.
-                                 See https://docs.github.com/en/rest/reference/actions#list-workflow-runs-for-a-repository
+  -s, --status strings          Workflow run status. e.g. completed, in_progress, queued, etc.
+                                 Multiple values can be provided separated by a comma. For a full list of supported values see https://docs.github.com/en/rest/reference/actions#list-workflow-runs-for-a-repository
+  -v, --verbose                 Enable verbose logging (info level)
 
 Use "workflow-stats [command] --help" for more information about a command.
 ```
@@ -106,6 +127,23 @@ $ gh workflow-stats -o $OWNER -r $REPO -f ci.yaml -A -c ">2024-01-01" -a $ACTOR
 
 More details on API rate limits can be found in the [GitHub API documentation](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api?apiVersion=2022-11-28).
 
+### Debug and Logging
+
+You can control the level of logging output using debug flags:
+
+```sh
+# Normal mode - clean output with no logs
+$ gh workflow-stats -o $OWNER -r $REPO -f ci.yaml
+
+# Verbose mode - show informational logs to stderr
+$ gh workflow-stats -o $OWNER -r $REPO -f ci.yaml --verbose
+
+# Debug mode - show detailed debug logs to stderr
+$ gh workflow-stats -o $OWNER -r $REPO -f ci.yaml --debug
+```
+
+**Note**: Logs are always output to stderr to avoid interfering with the main output. When using `--json` flag, logs are automatically disabled to ensure clean JSON output.
+
 ### GitHub Enterprise Server
 
 If you want to use GitHub Enterprise Server, you can use the `--host` flag or set the `GH_HOST` environment variable.
@@ -129,6 +167,8 @@ GitHub imposes a [primary rate limit](https://docs.github.com/en/rest/using-the-
 
 When you reach the primary rate limit, results are calculated based on successful fetches.
 In the secondary rate limit, this tool handles requests in a round-tripper to avoid the rate limit. Therefore, the execution time may be longer.
+
+For large repositories with many workflow runs, consider using filtering options (`--created`, `--actor`, `--branch`, etc.) to reduce the dataset size.
 
 ## Standard Output
 

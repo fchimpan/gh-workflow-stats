@@ -35,16 +35,16 @@ func Runs(w io.Writer, wrs *parser.WorkflowRunsStatsSummary) {
 	red := color.New(color.FgRed).SprintFunc()
 	yellow := color.New(color.FgYellow).SprintFunc()
 
-	fmt.Fprintf(w, totalRunsFormat, "\U0001F3C3", wrs.TotalRunsCount)
+	_, _ = fmt.Fprintf(w, totalRunsFormat, "\U0001F3C3", wrs.TotalRunsCount)
 
-	fmt.Fprintf(w, conclusionFormat, green("\u2714 Success"), sc, sr)
-	fmt.Fprintf(w, conclusionFormat, red("\u2716 Failure"), fc, fr)
-	fmt.Fprintf(w, conclusionFormat, yellow("\U0001F914 Others"), oc, or)
+	_, _ = fmt.Fprintf(w, conclusionFormat, green("\u2714 Success"), sc, sr)
+	_, _ = fmt.Fprintf(w, conclusionFormat, red("\u2716 Failure"), fc, fr)
+	_, _ = fmt.Fprintf(w, conclusionFormat, yellow("\U0001F914 Others"), oc, or)
 
-	fmt.Fprintf(w, executionTimeFormat, "\u23F0")
-	fmt.Fprintf(w, executionFormat, "Min", wrs.ExecutionDurationStats.Min)
-	fmt.Fprintf(w, executionFormat, "Max", wrs.ExecutionDurationStats.Max)
-	fmt.Fprintf(w, executionFormat, "Avg", wrs.ExecutionDurationStats.Avg)
-	fmt.Fprintf(w, executionFormat, "Med", wrs.ExecutionDurationStats.Med)
-	fmt.Fprintf(w, executionFormat, "Std", wrs.ExecutionDurationStats.Std)
+	_, _ = fmt.Fprintf(w, executionTimeFormat, "\u23F0")
+	_, _ = fmt.Fprintf(w, executionFormat, "Min", wrs.ExecutionDurationStats.Min)
+	_, _ = fmt.Fprintf(w, executionFormat, "Max", wrs.ExecutionDurationStats.Max)
+	_, _ = fmt.Fprintf(w, executionFormat, "Avg", wrs.ExecutionDurationStats.Avg)
+	_, _ = fmt.Fprintf(w, executionFormat, "Med", wrs.ExecutionDurationStats.Med)
+	_, _ = fmt.Fprintf(w, executionFormat, "Std", wrs.ExecutionDurationStats.Std)
 }
