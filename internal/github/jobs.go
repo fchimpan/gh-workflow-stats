@@ -4,13 +4,24 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"runtime"
 	"sync"
 
-	"github.com/fchimpan/gh-workflow-stats/internal/concurrency"
 	"github.com/google/go-github/v60/github"
 )
 
 func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, runs []*github.WorkflowRun, cfg *WorkflowRunsConfig) ([]*github.WorkflowJob, error) {
+	// Validate inputs
+	if ctx == nil {
+		return nil, fmt.Errorf("context cannot be nil")
+	}
+	if cfg == nil {
+		return nil, fmt.Errorf("config cannot be nil")
+	}
+	if c.client == nil {
+		return nil, fmt.Errorf("GitHub client not initialized")
+	}
+	
 	if len(runs) == 0 {
 		c.logger.Debug("no workflow runs to fetch jobs for")
 		return []*github.WorkflowJob{}, nil
@@ -27,21 +38,25 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 	jobsCh := make(chan []*github.WorkflowJob, bufferSize)
 	errCh := make(chan error, len(runs))
 
-	// Use controlled concurrency with semaphore
-	sem := concurrency.NewAPIClientSemaphore()
+	// Use original high-concurrency semaphore for performance
+	sem := make(chan struct{}, runtime.NumCPU()*8)
 	var wg sync.WaitGroup
 	wg.Add(len(runs))
 	
 	for _, run := range runs {
+		sem <- struct{}{}
+
 		go func(run *github.WorkflowRun) {
-			defer wg.Done()
+			defer func() {
+				<-sem
+				wg.Done()
+			}()
 			
-			// Acquire semaphore before making API request
-			if err := sem.Acquire(ctx); err != nil {
-				errCh <- fmt.Errorf("failed to acquire semaphore for run %d: %w", run.GetID(), err)
+			// Skip nil runs
+			if run == nil {
+				c.logger.Debug("skipping nil workflow run")
 				return
 			}
-			defer sem.Release()
 
 			c.logger.Debug("fetching jobs for workflow run",
 				"run_id", run.GetID(),
@@ -53,15 +68,9 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 			})
 			
 			if err != nil {
-				handledErr := c.handleHTTPError(resp, err, "list_workflow_jobs_attempt", fmt.Sprintf("jobs/run/%d/attempt/%d", run.GetID(), run.GetRunAttempt()))
-				
-				// Check if it's a rate limit error
-				if _, ok := handledErr.(*RateLimitError); ok {
-					c.logger.Warn("rate limit hit while fetching jobs",
-						"run_id", run.GetID(),
-						"run_attempt", run.GetRunAttempt(),
-					)
-					errCh <- handledErr
+				// Handle rate limit errors specifically
+				if _, ok := err.(*github.RateLimitError); ok {
+					errCh <- RateLimitError{Err: err}
 					return
 				}
 				
@@ -74,8 +83,17 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 					return
 				}
 				
+				// For other HTTP errors, skip
+				if resp != nil && resp.Response != nil {
+					c.logger.Debug("HTTP error fetching jobs, skipping",
+						"run_id", run.GetID(),
+						"status_code", resp.Response.StatusCode,
+					)
+					return
+				}
+				
 				// For other errors, report them
-				errCh <- handledErr
+				errCh <- err
 				return
 			}
 			
@@ -100,42 +118,28 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 	close(jobsCh)
 	close(errCh)
 
-	// Handle collected errors
-	var firstRateLimitErr error
-	errorCount := 0
-	
+	// Handle errors - prioritize rate limit errors
+	var err error
 	for e := range errCh {
 		if e != nil {
-			errorCount++
-			// Prioritize rate limit errors
-			if _, ok := e.(*RateLimitError); ok && firstRateLimitErr == nil {
-				firstRateLimitErr = e
+			if _, ok := e.(*RateLimitError); ok {
+				err = e
+			} else if err == nil {
+				err = e
 			}
 		}
 	}
 
 	// Collect all jobs
-	allJobs := make([]*github.WorkflowJob, 0, len(runs)*10) // Estimate ~10 jobs per run
-	totalJobs := 0
-	
+	allJobs := make([]*github.WorkflowJob, 0, len(runs))
 	for jobs := range jobsCh {
 		allJobs = append(allJobs, jobs...)
-		totalJobs += len(jobs)
 	}
 
 	c.logger.Info("completed workflow jobs fetch",
 		"total_runs", len(runs),
-		"total_jobs", totalJobs,
-		"error_count", errorCount,
+		"total_jobs", len(allJobs),
 	)
 
-	// Return rate limit error if encountered
-	if firstRateLimitErr != nil {
-		c.logger.Warn("returning partial results due to rate limit",
-			"jobs_fetched", totalJobs,
-		)
-		return allJobs, firstRateLimitErr
-	}
-
-	return allJobs, nil
+	return allJobs, err
 }
