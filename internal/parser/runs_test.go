@@ -299,3 +299,120 @@ func timeParse(s string) time.Time {
 	t, _ := time.ParseInLocation(time.RFC3339, s, time.UTC)
 	return t.Round(0)
 }
+
+func TestConstants(t *testing.T) {
+	assert.Equal(t, "success", ConclusionSuccess)
+	assert.Equal(t, "failure", ConclusionFailure)
+	assert.Equal(t, "others", ConclusionOthers)
+	assert.Equal(t, "completed", StatusCompleted)
+	assert.Equal(t, 35*24*60*60, MaxWorkflowDurationSeconds)
+	assert.Equal(t, 3024000, MaxWorkflowDurationCapped)
+}
+
+func TestWorkflowRunsParseEdgeCases(t *testing.T) {
+	tests := []struct {
+		name  string
+		input []*github.WorkflowRun
+		desc  string
+	}{
+		{
+			name:  "Nil input",
+			input: nil,
+			desc:  "Should handle nil input gracefully",
+		},
+		{
+			name:  "Empty slice",
+			input: []*github.WorkflowRun{},
+			desc:  "Should handle empty slice",
+		},
+		{
+			name: "Run with nil conclusion",
+			input: []*github.WorkflowRun{
+				{
+					ID:         github.Int64(1),
+					Status:     github.String("completed"),
+					Conclusion: nil,
+				},
+			},
+			desc: "Should handle nil conclusion",
+		},
+		{
+			name: "Run with nil status",
+			input: []*github.WorkflowRun{
+				{
+					ID:         github.Int64(1),
+					Status:     nil,
+					Conclusion: github.String("success"),
+				},
+			},
+			desc: "Should handle nil status",
+		},
+		{
+			name: "Run with very large duration",
+			input: []*github.WorkflowRun{
+				{
+					ID:           github.Int64(1),
+					Status:       github.String("completed"),
+					Conclusion:   github.String("success"),
+					RunStartedAt: &github.Timestamp{Time: time.Unix(0, 0)},
+					UpdatedAt:    &github.Timestamp{Time: time.Unix(MaxWorkflowDurationSeconds+1000, 0)},
+				},
+			},
+			desc: "Should cap very large durations",
+		},
+		{
+			name: "Run with negative duration",
+			input: []*github.WorkflowRun{
+				{
+					ID:           github.Int64(1),
+					Status:       github.String("completed"),
+					Conclusion:   github.String("success"),
+					RunStartedAt: &github.Timestamp{Time: time.Unix(1000, 0)},
+					UpdatedAt:    &github.Timestamp{Time: time.Unix(500, 0)},
+				},
+			},
+			desc: "Should handle negative duration",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := WorkflowRunsParse(tt.input)
+			assert.NotNil(t, result, tt.desc)
+			assert.NotNil(t, result.Conclusions, "Conclusions map should not be nil")
+
+			// Verify all required conclusion types exist
+			for _, conclusionType := range []string{ConclusionSuccess, ConclusionFailure, ConclusionOthers} {
+				assert.Contains(t, result.Conclusions, conclusionType, "Should contain conclusion type: %s", conclusionType)
+				assert.NotNil(t, result.Conclusions[conclusionType], "Conclusion should not be nil: %s", conclusionType)
+			}
+		})
+	}
+}
+
+func TestWorkflowRunStructure(t *testing.T) {
+	testRun := WorkflowRun{
+		ID:           12345,
+		Status:       "completed",
+		Conclusion:   "success",
+		Actor:        "test-user",
+		RunAttempt:   1,
+		HTMLURL:      "https://github.com/test/repo/actions/runs/12345",
+		JobsURL:      "https://api.github.com/repos/test/repo/actions/runs/12345/jobs",
+		LogsURL:      "https://api.github.com/repos/test/repo/actions/runs/12345/logs",
+		RunStartedAt: time.Now(),
+		UpdateAt:     time.Now(),
+		CreatedAt:    time.Now(),
+		Duration:     120.5,
+	}
+
+	assert.Equal(t, int64(12345), testRun.ID)
+	assert.Equal(t, "completed", testRun.Status)
+	assert.Equal(t, "success", testRun.Conclusion)
+	assert.Equal(t, "test-user", testRun.Actor)
+	assert.Equal(t, 1, testRun.RunAttempt)
+	assert.Contains(t, testRun.HTMLURL, "12345")
+	assert.Contains(t, testRun.JobsURL, "jobs")
+	assert.Contains(t, testRun.LogsURL, "logs")
+	assert.Equal(t, 120.5, testRun.Duration)
+}
