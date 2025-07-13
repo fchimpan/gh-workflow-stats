@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -23,6 +22,8 @@ var (
 	headSHA             string
 	excludePullRequests bool
 	checkSuiteID        int64
+	debug               bool
+	verbose             bool
 )
 
 var rootCmd = &cobra.Command{
@@ -30,33 +31,17 @@ var rootCmd = &cobra.Command{
 	Short:   "Fetch workflow runs stats. Retrieve the success rate and execution time of workflows.",
 	Example: `$ gh workflow-stats --org $OWNER --repo $REPO -f ci.yaml`,
 	RunE: func(cmd *cobra.Command, _ []string) error {
-		if envHost := os.Getenv("GH_HOST"); envHost != "" && !cmd.Flags().Changed("host") {
-			host = envHost
+		resolveHost(cmd, &host)
+
+		if err := validateFlags(org, repo, fileName, id); err != nil {
+			return err
 		}
-		if org == "" || repo == "" {
-			return fmt.Errorf("--org and --repo flag must be specified. If you want to use GitHub Enterprise Server, specify your GitHub Enterprise Server host with --host flag")
-		}
-		if fileName == "" && id == -1 {
-			return fmt.Errorf("--file or --id flag must be specified")
-		}
-		return workflowStats(config{
-			host:             host,
-			org:              org,
-			repo:             repo,
-			workflowFileName: fileName,
-			workflowID:       id,
-		}, options{
-			actor:               actor,
-			branch:              branch,
-			event:               event,
-			status:              status,
-			created:             created,
-			headSHA:             headSHA,
-			excludePullRequests: excludePullRequests,
-			checkSuiteID:        checkSuiteID,
-			all:                 all,
-			js:                  js,
-		}, false)
+
+		cfg := createConfig(host, org, repo, fileName, id)
+		opts := createOptions(actor, branch, event, status, created, headSHA,
+			excludePullRequests, all, js, checkSuiteID, 0)
+
+		return workflowStats(cfg, opts, false)
 	},
 }
 
@@ -86,4 +71,8 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&headSHA, "head-sha", "S", "", "Workflow run head SHA")
 	rootCmd.PersistentFlags().BoolVarP(&excludePullRequests, "exclude-pull-requests", "x", false, "Workflow run exclude pull requests")
 	rootCmd.PersistentFlags().Int64VarP(&checkSuiteID, "check-suite-id", "C", 0, "Workflow run check suite ID")
+	
+	// Debug and logging flags
+	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Enable debug mode with detailed logging")
+	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Enable verbose logging (info level)")
 }
