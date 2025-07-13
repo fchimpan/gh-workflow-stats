@@ -145,17 +145,17 @@ func TestResolveHost(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			// Set up environment
 			if tt.envValue != "" {
-				os.Setenv("GH_HOST", tt.envValue)
-				defer os.Unsetenv("GH_HOST")
+				_ = os.Setenv("GH_HOST", tt.envValue)
+				defer func() { _ = os.Unsetenv("GH_HOST") }()
 			} else {
-				os.Unsetenv("GH_HOST")
+				_ = os.Unsetenv("GH_HOST")
 			}
 
 			// Create a mock cobra command
 			cmd := &cobra.Command{}
 			cmd.Flags().String("host", "github.com", "GitHub host")
 			if tt.flagChanged {
-				cmd.Flags().Set("host", tt.initialHost)
+				_ = cmd.Flags().Set("host", tt.initialHost)
 			}
 
 			host := tt.initialHost

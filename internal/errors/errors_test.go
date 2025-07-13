@@ -62,7 +62,7 @@ func TestAppError_WithContext(t *testing.T) {
 	assert.Equal(t, "value", appError.Context["key"])
 
 	// Add another context
-	appError.WithContext("another", "context")
+	_ = appError.WithContext("another", "context")
 	assert.Equal(t, "context", appError.Context["another"])
 	assert.Equal(t, "value", appError.Context["key"]) // Previous context should remain
 }

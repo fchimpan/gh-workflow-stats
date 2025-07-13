@@ -94,7 +94,7 @@ func (p *WorkerPool) Submit(ctx context.Context, task func() error) error {
 	
 	go func() {
 		defer p.semaphore.Release()
-		task()
+		_ = task()
 	}()
 	
 	return nil

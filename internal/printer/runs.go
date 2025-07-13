@@ -35,7 +35,7 @@ func Runs(w io.Writer, wrs *parser.WorkflowRunsStatsSummary) {
 	red := color.New(color.FgRed).SprintFunc()
 	yellow := color.New(color.FgYellow).SprintFunc()
 
-	fmt.Fprintf(w, totalRunsFormat, "\U0001F3C3", wrs.TotalRunsCount)
+	_, _ = fmt.Fprintf(w, totalRunsFormat, "\U0001F3C3", wrs.TotalRunsCount)
 
 	fmt.Fprintf(w, conclusionFormat, green("\u2714 Success"), sc, sr)
 	fmt.Fprintf(w, conclusionFormat, red("\u2716 Failure"), fc, fr)

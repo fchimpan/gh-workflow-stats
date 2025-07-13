@@ -37,39 +37,6 @@ func resolveHost(cmd *cobra.Command, host *string) {
 	}
 }
 
-// createWorkflowConfig creates a WorkflowConfig from command flags
-func createWorkflowConfig(host, org, repo, fileName string, id int64) *types.WorkflowConfig {
-	return &types.WorkflowConfig{
-		Host:             host,
-		Org:              org,
-		Repo:             repo,
-		WorkflowFileName: fileName,
-		WorkflowID:       id,
-	}
-}
-
-// createWorkflowFetchOptions creates WorkflowFetchOptions from command flags
-func createWorkflowFetchOptions(actor, branch, event string, status []string, created, headSHA string,
-	excludePullRequests, all, js bool, checkSuiteID int64, jobNum int) *types.WorkflowFetchOptions {
-	
-	if jobNum <= 0 {
-		jobNum = types.DefaultJobCount
-	}
-	
-	return &types.WorkflowFetchOptions{
-		Actor:               actor,
-		Branch:              branch,
-		Event:               event,
-		Status:              status,
-		Created:             created,
-		HeadSHA:             headSHA,
-		ExcludePullRequests: excludePullRequests,
-		CheckSuiteID:        checkSuiteID,
-		All:                 all,
-		OutputJSON:          js,
-		JobCount:            jobNum,
-	}
-}
 
 // Legacy functions for backward compatibility
 // These will be removed in a future version

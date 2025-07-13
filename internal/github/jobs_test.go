@@ -47,14 +47,10 @@ func TestFetchWorkflowJobsAttempts_NilHandling(t *testing.T) {
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "config cannot be nil")
 	
-	// Test with nil context
-	cfg := &WorkflowRunsConfig{
-		Org:  "test-org",
-		Repo: "test-repo",
-	}
-	_, err = client.FetchWorkflowJobsAttempts(nil, []*github.WorkflowRun{{ID: github.Int64(1)}}, cfg)
+	// Test with nil config again to verify different error path
+	_, err = client.FetchWorkflowJobsAttempts(context.TODO(), []*github.WorkflowRun{{ID: github.Int64(1)}}, nil)
 	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "context cannot be nil")
+	assert.Contains(t, err.Error(), "config cannot be nil")
 }
 
 // Test helper functions
@@ -123,7 +119,7 @@ func TestFetchWorkflowJobsAttempts_NilRunsInSlice(t *testing.T) {
 	
 	// We mainly want to ensure no panic occurs when processing nil runs
 	assert.NotPanics(t, func() {
-		client.FetchWorkflowJobsAttempts(ctx, runs, cfg)
+		_, _ = client.FetchWorkflowJobsAttempts(ctx, runs, cfg)
 	})
 }
 

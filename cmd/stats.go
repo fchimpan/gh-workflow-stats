@@ -181,7 +181,7 @@ func fetchWorkflowRuns(ctx context.Context, client *github.WorkflowStatsClient, 
 	)
 	if err != nil {
 		// Check if we have partial results (e.g., from rate limiting)
-		if runs != nil && len(runs) > 0 {
+		if len(runs) > 0 {
 			// Return partial results with status filtering applied
 			return filterRunAttemptsByStatus(runs, opt.status), err
 		}
