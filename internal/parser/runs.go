@@ -95,9 +95,9 @@ func WorkflowRunsParse(wrs []*github.WorkflowRun) *WorkflowRunsStatsSummary {
 			HTMLURL:      wr.GetHTMLURL() + "/attempts/" + strconv.Itoa(wr.GetRunAttempt()),
 			JobsURL:      wr.GetJobsURL(),
 			LogsURL:      wr.GetLogsURL(),
-			RunStartedAt: wr.GetRunStartedAt().Time.UTC(),
-			UpdateAt:     wr.GetUpdatedAt().Time.UTC(),
-			CreatedAt:    wr.GetCreatedAt().Time.UTC(),
+			RunStartedAt: wr.GetRunStartedAt().UTC(),
+			UpdateAt:     wr.GetUpdatedAt().UTC(),
+			CreatedAt:    wr.GetCreatedAt().UTC(),
 		}
 		// TODO: This is not the correct way to calculate the duration. https://github.com/fchimpan/gh-workflow-stats/issues/11
 		d := wr.GetUpdatedAt().Sub(wr.GetRunStartedAt().Time).Seconds()

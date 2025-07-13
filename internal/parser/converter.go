@@ -79,9 +79,9 @@ func (c *WorkflowRunConverter) convertSingleRun(run *github.WorkflowRun) *types.
 		HTMLURL:      c.buildRunURL(run),
 		JobsURL:      run.GetJobsURL(),
 		LogsURL:      run.GetLogsURL(),
-		RunStartedAt: run.GetRunStartedAt().Time.UTC(),
-		UpdatedAt:    run.GetUpdatedAt().Time.UTC(),
-		CreatedAt:    run.GetCreatedAt().Time.UTC(),
+		RunStartedAt: run.GetRunStartedAt().UTC(),
+		UpdatedAt:    run.GetUpdatedAt().UTC(),
+		CreatedAt:    run.GetCreatedAt().UTC(),
 	}
 
 	// Calculate duration
@@ -107,14 +107,14 @@ func (c *WorkflowRunConverter) buildRunURL(run *github.WorkflowRun) string {
 
 // calculateDuration calculates run duration with bounds checking
 func (c *WorkflowRunConverter) calculateDuration(run *github.WorkflowRun) float64 {
-	startTime := run.GetRunStartedAt().Time
-	endTime := run.GetUpdatedAt().Time
+	startTime := run.GetRunStartedAt()
+	endTime := run.GetUpdatedAt()
 	
 	if startTime.IsZero() || endTime.IsZero() {
 		return 0
 	}
 	
-	duration := endTime.Sub(startTime).Seconds()
+	duration := endTime.Sub(startTime.Time).Seconds()
 	
 	// Apply bounds checking
 	if duration < 0 {
@@ -305,26 +305,26 @@ func (c *WorkflowJobConverter) convertStepAggregators(stepGroups map[string]*ste
 
 // calculateJobDuration calculates the duration of a job
 func (c *WorkflowJobConverter) calculateJobDuration(job *github.WorkflowJob) float64 {
-	startTime := job.GetStartedAt().Time
-	endTime := job.GetCompletedAt().Time
+	startTime := job.GetStartedAt()
+	endTime := job.GetCompletedAt()
 	
 	if startTime.IsZero() || endTime.IsZero() {
 		return 0
 	}
 	
-	duration := endTime.Sub(startTime).Seconds()
+	duration := endTime.Sub(startTime.Time).Seconds()
 	return max(duration, 0)
 }
 
 // calculateStepDuration calculates the duration of a step
 func (c *WorkflowJobConverter) calculateStepDuration(step *github.TaskStep) float64 {
-	startTime := step.GetStartedAt().Time
-	endTime := step.GetCompletedAt().Time
+	startTime := step.GetStartedAt()
+	endTime := step.GetCompletedAt()
 	
 	if startTime.IsZero() || endTime.IsZero() {
 		return 0
 	}
 	
-	duration := endTime.Sub(startTime).Seconds()
+	duration := endTime.Sub(startTime.Time).Seconds()
 	return max(duration, 0)
 }

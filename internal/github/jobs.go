@@ -75,7 +75,7 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 				}
 				
 				// For 404 errors, skip silently (job might not exist)
-				if resp != nil && resp.Response != nil && resp.Response.StatusCode == http.StatusNotFound {
+				if resp != nil && resp.Response != nil && resp.StatusCode == http.StatusNotFound {
 					c.logger.Debug("workflow jobs not found, skipping",
 						"run_id", run.GetID(),
 						"run_attempt", run.GetRunAttempt(),
@@ -87,7 +87,7 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 				if resp != nil && resp.Response != nil {
 					c.logger.Debug("HTTP error fetching jobs, skipping",
 						"run_id", run.GetID(),
-						"status_code", resp.Response.StatusCode,
+						"status_code", resp.StatusCode,
 					)
 					return
 				}

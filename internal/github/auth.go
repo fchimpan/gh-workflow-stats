@@ -108,14 +108,14 @@ func (c *WorkflowStatsClient) handleHTTPError(resp *github.Response, err error, 
 			err,
 		).WithResource(resource).WithOperation(operation)
 
-		if resp.Response.Header.Get("X-GitHub-Request-Id") != "" {
-			apiErr = apiErr.WithRequestID(resp.Response.Header.Get("X-GitHub-Request-Id"))
+		if resp.Header.Get("X-GitHub-Request-Id") != "" {
+			apiErr = apiErr.WithRequestID(resp.Header.Get("X-GitHub-Request-Id"))
 		}
 
 		LogError(c.logger, apiErr, operation, map[string]interface{}{
 			"resource":    resource,
-			"status_code": resp.Response.StatusCode,
-			"request_id":  resp.Response.Header.Get("X-GitHub-Request-Id"),
+			"status_code": resp.StatusCode,
+			"request_id":  resp.Header.Get("X-GitHub-Request-Id"),
 		})
 		return apiErr
 	}

@@ -44,12 +44,12 @@ func NewRateLimitError(gitHubErr *github.RateLimitError, resource, operation str
 	if gitHubErr != nil {
 		rateLimitErr.Limit = gitHubErr.Rate.Limit
 		rateLimitErr.Remaining = gitHubErr.Rate.Remaining
-		rateLimitErr.ResetAt = gitHubErr.Rate.Reset.Time
+		rateLimitErr.ResetAt = gitHubErr.Rate.Reset.UTC()
 
 		// Calculate retry after duration
 		now := time.Now()
-		if gitHubErr.Rate.Reset.Time.After(now) {
-			rateLimitErr.RetryAfter = gitHubErr.Rate.Reset.Time.Sub(now)
+		if gitHubErr.Rate.Reset.After(now) {
+			rateLimitErr.RetryAfter = gitHubErr.Rate.Reset.Sub(now)
 		}
 	}
 

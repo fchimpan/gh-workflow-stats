@@ -312,9 +312,9 @@ func (sp *StreamingProcessor) convertRunToSummary(run *github.WorkflowRun) *type
 		HTMLURL:      sp.buildRunURL(run),
 		JobsURL:      run.GetJobsURL(),
 		LogsURL:      run.GetLogsURL(),
-		RunStartedAt: run.GetRunStartedAt().Time.UTC(),
-		UpdatedAt:    run.GetUpdatedAt().Time.UTC(),
-		CreatedAt:    run.GetCreatedAt().Time.UTC(),
+		RunStartedAt: run.GetRunStartedAt().UTC(),
+		UpdatedAt:    run.GetUpdatedAt().UTC(),
+		CreatedAt:    run.GetCreatedAt().UTC(),
 		Duration:     sp.calculateRunDuration(run),
 	}
 }

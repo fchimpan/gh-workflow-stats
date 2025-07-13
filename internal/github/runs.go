@@ -173,7 +173,7 @@ func (c *WorkflowStatsClient) fetchRunAttempts(ctx context.Context, cfg *Workflo
 					}
 
 					// For 404 errors, continue as the attempt might not exist
-					if resp != nil && resp.Response != nil && resp.Response.StatusCode == http.StatusNotFound {
+					if resp != nil && resp.Response != nil && resp.StatusCode == http.StatusNotFound {
 						c.logger.Debug("workflow run attempt not found, skipping",
 							"run_id", runID,
 							"attempt", attemptNum,
