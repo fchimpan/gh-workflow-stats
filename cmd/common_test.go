@@ -85,7 +85,8 @@ func TestValidateFlags(t *testing.T) {
 			repo:     "test-repo",
 			fileName: "",
 			id:       0,
-			wantErr:  false,
+			wantErr:  true,
+			errMsg:   "ConfigurationError: " + ErrMissingWorkflow,
 		},
 	}
 

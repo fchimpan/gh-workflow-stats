@@ -22,7 +22,7 @@ func validateFlags(org, repo, fileName string, id int64) error {
 			WithContext("org", org).
 			WithContext("repo", repo)
 	}
-	if fileName == "" && id == -1 {
+	if fileName == "" && id <= 0 {
 		return errors.NewConfigurationError(ErrMissingWorkflow, nil).
 			WithContext("workflow_file", fileName).
 			WithContext("workflow_id", fmt.Sprintf("%d", id))
