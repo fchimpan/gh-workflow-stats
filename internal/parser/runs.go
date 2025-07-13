@@ -12,6 +12,11 @@ const (
 	ConclusionFailure = "failure"
 	ConclusionOthers  = "others"
 	StatusCompleted   = "completed"
+
+	// Maximum duration of a workflow run is 35 days in Self-hosted runners.
+	// ref: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners#usage-limits
+	MaxWorkflowDurationSeconds = 35 * 24 * 60 * 60 // 35 days in seconds
+	MaxWorkflowDurationCapped  = 3024000           // Capped duration value
 )
 
 type WorkflowRunsStatsSummary struct {
@@ -96,9 +101,8 @@ func WorkflowRunsParse(wrs []*github.WorkflowRun) *WorkflowRunsStatsSummary {
 		}
 		// TODO: This is not the correct way to calculate the duration. https://github.com/fchimpan/gh-workflow-stats/issues/11
 		d := wr.GetUpdatedAt().Sub(wr.GetRunStartedAt().Time).Seconds()
-		// Maximum duration of a workflow run is 35 days in Self-hosted runners. ref: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners#usage-limits
-		if d > 35*24*60*60 {
-			d = 3024000
+		if d > MaxWorkflowDurationSeconds {
+			d = MaxWorkflowDurationCapped
 		}
 		w.Duration = d
 		if c == ConclusionSuccess && d > 0 && wr.GetStatus() == StatusCompleted {
