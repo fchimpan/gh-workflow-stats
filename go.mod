@@ -10,7 +10,7 @@ require (
 	github.com/google/go-github/v60 v60.0.0
 	github.com/montanaflynn/stats v0.7.1
 	github.com/spf13/cobra v1.9.1
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.0
 )
 
 require (
