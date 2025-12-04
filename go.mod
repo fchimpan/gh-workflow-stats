@@ -4,13 +4,13 @@ go 1.23.0
 
 require (
 	github.com/briandowns/spinner v1.23.2
-	github.com/cli/go-gh/v2 v2.12.2
+	github.com/cli/go-gh/v2 v2.13.0
 	github.com/fatih/color v1.18.0
 	github.com/gofri/go-github-ratelimit v1.1.1
 	github.com/gofri/go-github-ratelimit/v2 v2.0.2
 	github.com/google/go-github/v60 v60.0.0
 	github.com/montanaflynn/stats v0.7.1
-	github.com/spf13/cobra v1.10.1
+	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
 )
 
