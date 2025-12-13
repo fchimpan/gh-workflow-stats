@@ -1,21 +1,25 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    "schedule:weekly",
-    ":semanticCommitTypeAll(chore)"
-  ],
-  "automerge": true,
-  "labels": [
-    "renovate"
-  ],
-  "postUpdateOptions": [
-    "gomodTidy"
+    "config:recommended"
   ],
   "packageRules": [
     {
-      "groupName": "go-libraries",
-      "matchManagers": ["gomod"]
+      "matchManagers": ["github-actions"],
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash"
+    },
+    {
+      "matchManagers": ["gomod"],
+      "postUpdateOptions": ["gomodTidy"]
+    },
+    {
+      "matchManagers": ["gomod"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash"
     },
     {
       "matchPackagePatterns": [
