@@ -12,20 +12,20 @@ import (
 
 // StreamingProcessor processes workflow data in streaming fashion to reduce memory usage
 type StreamingProcessor struct {
-	mu                sync.RWMutex
-	runStats          *types.WorkflowRunStats
-	jobAggregators    map[string]*jobStreamAggregator
-	successDurations  []float64
-	calculator        *StatisticsCalculator
-	maxMemoryItems    int
+	mu               sync.RWMutex
+	runStats         *types.WorkflowRunStats
+	jobAggregators   map[string]*jobStreamAggregator
+	successDurations []float64
+	calculator       *StatisticsCalculator
+	maxMemoryItems   int
 }
 
 // jobStreamAggregator accumulates job statistics without storing all raw data
 type jobStreamAggregator struct {
-	name           string
-	totalCount     int
-	conclusions    map[types.WorkflowConclusion]int
-	durations      []float64
+	name            string
+	totalCount      int
+	conclusions     map[types.WorkflowConclusion]int
+	durations       []float64
 	stepAggregators map[string]*stepStreamAggregator
 }
 
@@ -72,7 +72,7 @@ func (sp *StreamingProcessor) ProcessWorkflowRun(run *github.WorkflowRun) {
 	}
 
 	conclusion := types.NormalizeConclusion(run.GetConclusion())
-	
+
 	// Initialize conclusion summary if not exists
 	if _, exists := sp.runStats.Conclusions[conclusion]; !exists {
 		sp.runStats.Conclusions[conclusion] = &types.ConclusionSummary{
@@ -80,22 +80,22 @@ func (sp *StreamingProcessor) ProcessWorkflowRun(run *github.WorkflowRun) {
 			Runs:  []*types.WorkflowRunSummary{},
 		}
 	}
-	
+
 	sp.runStats.Conclusions[conclusion].Count++
 
 	// Only store run details if under memory limit
 	if sp.getTotalStoredRuns() < sp.maxMemoryItems {
 		summary := sp.convertRunToSummary(run)
 		sp.runStats.Conclusions[conclusion].Runs = append(
-			sp.runStats.Conclusions[conclusion].Runs, 
+			sp.runStats.Conclusions[conclusion].Runs,
 			summary,
 		)
 	}
 
 	// Collect durations for statistics (with memory limit)
-	if conclusion == types.ConclusionSuccess && 
-	   run.GetStatus() == "completed" && 
-	   len(sp.successDurations) < sp.maxMemoryItems {
+	if conclusion == types.ConclusionSuccess &&
+		run.GetStatus() == "completed" &&
+		len(sp.successDurations) < sp.maxMemoryItems {
 		duration := sp.calculateRunDuration(run)
 		if duration > 0 {
 			sp.successDurations = append(sp.successDurations, duration)
@@ -113,7 +113,7 @@ func (sp *StreamingProcessor) ProcessWorkflowJob(job *github.WorkflowJob) {
 	}
 
 	jobName := job.GetName()
-	
+
 	// Get or create job aggregator
 	if _, exists := sp.jobAggregators[jobName]; !exists {
 		sp.jobAggregators[jobName] = &jobStreamAggregator{
@@ -127,14 +127,14 @@ func (sp *StreamingProcessor) ProcessWorkflowJob(job *github.WorkflowJob) {
 
 	jobAgg := sp.jobAggregators[jobName]
 	jobAgg.totalCount++
-	
+
 	conclusion := types.NormalizeConclusion(job.GetConclusion())
 	jobAgg.conclusions[conclusion]++
 
 	// Collect job duration (with memory limit)
-	if conclusion == types.ConclusionSuccess && 
-	   job.GetStatus() == "completed" && 
-	   len(jobAgg.durations) < sp.maxMemoryItems/10 {
+	if conclusion == types.ConclusionSuccess &&
+		job.GetStatus() == "completed" &&
+		len(jobAgg.durations) < sp.maxMemoryItems/10 {
 		duration := sp.calculateJobDuration(job)
 		if duration > 0 {
 			jobAgg.durations = append(jobAgg.durations, duration)
@@ -149,7 +149,7 @@ func (sp *StreamingProcessor) ProcessWorkflowJob(job *github.WorkflowJob) {
 func (sp *StreamingProcessor) processJobSteps(job *github.WorkflowJob, jobAgg *jobStreamAggregator) {
 	for _, step := range job.Steps {
 		stepName := step.GetName()
-		
+
 		// Get or create step aggregator
 		if _, exists := jobAgg.stepAggregators[stepName]; !exists {
 			jobAgg.stepAggregators[stepName] = &stepStreamAggregator{
@@ -158,7 +158,7 @@ func (sp *StreamingProcessor) processJobSteps(job *github.WorkflowJob, jobAgg *j
 				runCount:    0,
 				conclusions: make(map[types.WorkflowConclusion]int),
 				durations:   make([]float64, 0, sp.maxMemoryItems/50), // Even smaller buffer for steps
-				failureURLs: make([]string, 0, 100), // Limit failure URLs
+				failureURLs: make([]string, 0, 100),                   // Limit failure URLs
 			}
 		}
 
@@ -169,16 +169,16 @@ func (sp *StreamingProcessor) processJobSteps(job *github.WorkflowJob, jobAgg *j
 		stepAgg.conclusions[conclusion]++
 
 		// Record failure URL (with limit)
-		if conclusion == types.ConclusionFailure && 
-		   step.GetStatus() == "completed" && 
-		   len(stepAgg.failureURLs) < 100 {
+		if conclusion == types.ConclusionFailure &&
+			step.GetStatus() == "completed" &&
+			len(stepAgg.failureURLs) < 100 {
 			stepAgg.failureURLs = append(stepAgg.failureURLs, job.GetHTMLURL())
 		}
 
 		// Collect step duration (with memory limit)
-		if step.GetStatus() == "completed" && 
-		   (conclusion == types.ConclusionSuccess || conclusion == types.ConclusionFailure) &&
-		   len(stepAgg.durations) < sp.maxMemoryItems/50 {
+		if step.GetStatus() == "completed" &&
+			(conclusion == types.ConclusionSuccess || conclusion == types.ConclusionFailure) &&
+			len(stepAgg.durations) < sp.maxMemoryItems/50 {
 			duration := sp.calculateStepDuration(step)
 			if duration >= 0 {
 				stepAgg.durations = append(stepAgg.durations, duration)
@@ -324,23 +324,23 @@ func (sp *StreamingProcessor) buildRunURL(run *github.WorkflowRun) string {
 	if baseURL == "" {
 		return ""
 	}
-	
+
 	attempt := run.GetRunAttempt()
 	if attempt > 1 {
 		return baseURL + "/attempts/" + strconv.Itoa(attempt)
 	}
-	
+
 	return baseURL
 }
 
 func (sp *StreamingProcessor) calculateRunDuration(run *github.WorkflowRun) float64 {
 	startTime := run.GetRunStartedAt().Time
 	endTime := run.GetUpdatedAt().Time
-	
+
 	if startTime.IsZero() || endTime.IsZero() {
 		return 0
 	}
-	
+
 	duration := endTime.Sub(startTime).Seconds()
 	return sp.calculator.ValidateDuration(duration)
 }
@@ -348,11 +348,11 @@ func (sp *StreamingProcessor) calculateRunDuration(run *github.WorkflowRun) floa
 func (sp *StreamingProcessor) calculateJobDuration(job *github.WorkflowJob) float64 {
 	startTime := job.GetStartedAt().Time
 	endTime := job.GetCompletedAt().Time
-	
+
 	if startTime.IsZero() || endTime.IsZero() {
 		return 0
 	}
-	
+
 	duration := endTime.Sub(startTime).Seconds()
 	return max(duration, 0)
 }
@@ -360,11 +360,11 @@ func (sp *StreamingProcessor) calculateJobDuration(job *github.WorkflowJob) floa
 func (sp *StreamingProcessor) calculateStepDuration(step *github.TaskStep) float64 {
 	startTime := step.GetStartedAt().Time
 	endTime := step.GetCompletedAt().Time
-	
+
 	if startTime.IsZero() || endTime.IsZero() {
 		return 0
 	}
-	
+
 	duration := endTime.Sub(startTime).Seconds()
 	return max(duration, 0)
 }
@@ -375,16 +375,16 @@ func (sp *StreamingProcessor) GetMemoryUsage() MemoryUsage {
 	defer sp.mu.RUnlock()
 
 	usage := MemoryUsage{
-		StoredRuns:        sp.getTotalStoredRuns(),
-		SuccessDurations:  len(sp.successDurations),
-		JobAggregators:    len(sp.jobAggregators),
-		MaxMemoryItems:    sp.maxMemoryItems,
+		StoredRuns:       sp.getTotalStoredRuns(),
+		SuccessDurations: len(sp.successDurations),
+		JobAggregators:   len(sp.jobAggregators),
+		MaxMemoryItems:   sp.maxMemoryItems,
 	}
 
 	for _, jobAgg := range sp.jobAggregators {
 		usage.JobDurations += len(jobAgg.durations)
 		usage.StepAggregators += len(jobAgg.stepAggregators)
-		
+
 		for _, stepAgg := range jobAgg.stepAggregators {
 			usage.StepDurations += len(stepAgg.durations)
 			usage.FailureURLs += len(stepAgg.failureURLs)

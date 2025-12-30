@@ -19,16 +19,16 @@ func (c *WorkflowConfig) IsValid() bool {
 // WorkflowFetchOptions represents options for fetching workflow data
 type WorkflowFetchOptions struct {
 	// Filter options
-	Actor               string    `json:"actor,omitempty"`
-	Branch              string    `json:"branch,omitempty"`
-	Event               string    `json:"event,omitempty"`
-	Status              []string  `json:"status,omitempty"`
-	Created             string    `json:"created,omitempty"`
-	HeadSHA             string    `json:"head_sha,omitempty"`
-	ExcludePullRequests bool      `json:"exclude_pull_requests"`
-	CheckSuiteID        int64     `json:"check_suite_id,omitempty"`
-	All                 bool      `json:"all"`
-	
+	Actor               string   `json:"actor,omitempty"`
+	Branch              string   `json:"branch,omitempty"`
+	Event               string   `json:"event,omitempty"`
+	Status              []string `json:"status,omitempty"`
+	Created             string   `json:"created,omitempty"`
+	HeadSHA             string   `json:"head_sha,omitempty"`
+	ExcludePullRequests bool     `json:"exclude_pull_requests"`
+	CheckSuiteID        int64    `json:"check_suite_id,omitempty"`
+	All                 bool     `json:"all"`
+
 	// Display options
 	OutputJSON bool `json:"output_json"`
 	JobCount   int  `json:"job_count"`
@@ -67,7 +67,7 @@ func (o *WorkflowFetchOptions) ToAPIRequestOptions() *APIRequestOptions {
 	if len(o.Status) > 0 {
 		status = o.Status[0] // API accepts only single status
 	}
-	
+
 	return &APIRequestOptions{
 		Actor:               o.Actor,
 		Branch:              o.Branch,
