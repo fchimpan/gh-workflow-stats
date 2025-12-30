@@ -97,7 +97,7 @@ func adjustRatePrecise(rate float64) float64 {
 	if rate > 1 {
 		return 1
 	}
-	
+
 	// Round to 6 decimal places to avoid floating point precision issues
 	return math.Round(rate*1000000) / 1000000
 }

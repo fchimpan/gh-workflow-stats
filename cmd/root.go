@@ -71,7 +71,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&headSHA, "head-sha", "S", "", "Workflow run head SHA")
 	rootCmd.PersistentFlags().BoolVarP(&excludePullRequests, "exclude-pull-requests", "x", false, "Workflow run exclude pull requests")
 	rootCmd.PersistentFlags().Int64VarP(&checkSuiteID, "check-suite-id", "C", 0, "Workflow run check suite ID")
-	
+
 	// Debug and logging flags
 	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Enable debug mode with detailed logging")
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Enable verbose logging (info level)")

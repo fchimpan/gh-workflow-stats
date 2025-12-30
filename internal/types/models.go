@@ -22,24 +22,24 @@ func (c WorkflowConclusion) String() string {
 type WorkflowStatus string
 
 const (
-	StatusCompleted   WorkflowStatus = "completed"
-	StatusInProgress  WorkflowStatus = "in_progress"
-	StatusQueued      WorkflowStatus = "queued"
-	StatusRequested   WorkflowStatus = "requested"
-	StatusWaiting     WorkflowStatus = "waiting"
-	StatusPending     WorkflowStatus = "pending"
+	StatusCompleted  WorkflowStatus = "completed"
+	StatusInProgress WorkflowStatus = "in_progress"
+	StatusQueued     WorkflowStatus = "queued"
+	StatusRequested  WorkflowStatus = "requested"
+	StatusWaiting    WorkflowStatus = "waiting"
+	StatusPending    WorkflowStatus = "pending"
 )
 
 // ExecutionStats represents statistical data for execution durations
 type ExecutionStats struct {
-	Min     float64 `json:"min"`
-	Max     float64 `json:"max"`
-	Mean    float64 `json:"mean"`
-	Median  float64 `json:"median"`
-	P95     float64 `json:"p95"`
-	P99     float64 `json:"p99"`
-	StdDev  float64 `json:"std_dev"`
-	Count   int     `json:"count"`
+	Min    float64 `json:"min"`
+	Max    float64 `json:"max"`
+	Mean   float64 `json:"mean"`
+	Median float64 `json:"median"`
+	P95    float64 `json:"p95"`
+	P99    float64 `json:"p99"`
+	StdDev float64 `json:"std_dev"`
+	Count  int     `json:"count"`
 }
 
 // SuccessRate represents success/failure rates
@@ -103,19 +103,19 @@ type StepStats struct {
 
 // WorkflowAnalysisResult represents the complete analysis result
 type WorkflowAnalysisResult struct {
-	RunStats  *WorkflowRunStats   `json:"run_stats"`
-	JobStats  []*WorkflowJobStats `json:"job_stats,omitempty"`
-	Metadata  *AnalysisMetadata   `json:"metadata"`
+	RunStats *WorkflowRunStats   `json:"run_stats"`
+	JobStats []*WorkflowJobStats `json:"job_stats,omitempty"`
+	Metadata *AnalysisMetadata   `json:"metadata"`
 }
 
 // AnalysisMetadata contains metadata about the analysis
 type AnalysisMetadata struct {
-	GeneratedAt   time.Time          `json:"generated_at"`
-	Config        *WorkflowConfig    `json:"config"`
+	GeneratedAt   time.Time             `json:"generated_at"`
+	Config        *WorkflowConfig       `json:"config"`
 	FetchOptions  *WorkflowFetchOptions `json:"fetch_options"`
-	TotalFetched  int                `json:"total_fetched"`
-	TotalFiltered int                `json:"total_filtered"`
-	RateLimited   bool               `json:"rate_limited,omitempty"`
+	TotalFetched  int                   `json:"total_fetched"`
+	TotalFiltered int                   `json:"total_filtered"`
+	RateLimited   bool                  `json:"rate_limited,omitempty"`
 }
 
 // IsValidConclusion returns true if the conclusion is valid

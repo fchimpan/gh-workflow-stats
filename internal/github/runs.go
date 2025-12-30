@@ -96,7 +96,7 @@ func (c *WorkflowStatsClient) fetchRunAttempts(ctx context.Context, cfg *Workflo
 	// First pass: count runs that need attempt fetching
 	runsNeedingAttempts := make([]*github.WorkflowRun, 0, len(runs))
 	totalEstimatedAttempts := 0
-	
+
 	for _, run := range runs {
 		if run == nil {
 			c.logger.Warn("skipping nil workflow run")
@@ -107,11 +107,11 @@ func (c *WorkflowStatsClient) fetchRunAttempts(ctx context.Context, cfg *Workflo
 		if runAttempt <= 1 {
 			continue // No additional attempts to fetch
 		}
-		
+
 		runsNeedingAttempts = append(runsNeedingAttempts, run)
 		totalEstimatedAttempts += runAttempt - 1 // exclude the first attempt which we already have
 	}
-	
+
 	if len(runsNeedingAttempts) == 0 {
 		c.logger.Debug("no workflow runs need additional attempts")
 		return []*github.WorkflowRun{}, nil
@@ -143,7 +143,7 @@ func (c *WorkflowStatsClient) fetchRunAttempts(ctx context.Context, cfg *Workflo
 			wg.Add(1)
 			go func(runID int64, attemptNum int) {
 				defer wg.Done()
-				
+
 				// Acquire semaphore to limit concurrent API calls
 				if err := sem.Acquire(ctx); err != nil {
 					mu.Lock()
@@ -152,7 +152,7 @@ func (c *WorkflowStatsClient) fetchRunAttempts(ctx context.Context, cfg *Workflo
 					return
 				}
 				defer sem.Release()
-				
+
 				r, resp, err := c.client.Actions.GetWorkflowRunAttempt(ctx, cfg.Org, cfg.Repo, runID, attemptNum, &github.WorkflowRunAttemptOptions{
 					ExcludePullRequests: &excludePullRequests,
 				})
@@ -212,7 +212,7 @@ func (c *WorkflowStatsClient) fetchRunAttempts(ctx context.Context, cfg *Workflo
 				return attempts, err
 			}
 		}
-		
+
 		// Log other errors but continue
 		c.logger.Warn("some attempt fetches failed, continuing with partial results",
 			"fetched_attempts", len(attempts),
@@ -332,11 +332,11 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 
 	// Create a semaphore to limit concurrent API requests
 	sem := concurrency.NewAPIClientSemaphore()
-	
+
 	var wg sync.WaitGroup
 	remainingPages := resp.LastPage - resp.FirstPage
 	wg.Add(remainingPages)
-	
+
 	// Optimize channel buffer size - use reasonable buffer based on page count
 	bufferSize := min(remainingPages, 10)
 	runsCh := make(chan []*github.WorkflowRun, bufferSize)
@@ -345,7 +345,7 @@ func (c *WorkflowStatsClient) FetchWorkflowRuns(ctx context.Context, cfg *Workfl
 	for i := resp.FirstPage + 1; i <= resp.LastPage; i++ {
 		go func(pageNum int) {
 			defer wg.Done()
-			
+
 			// Acquire semaphore before making API request
 			if err := sem.Acquire(ctx); err != nil {
 				errCh <- fmt.Errorf("failed to acquire semaphore for page %d: %w", pageNum, err)

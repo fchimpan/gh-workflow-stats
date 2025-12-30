@@ -91,12 +91,12 @@ func (p *WorkerPool) Submit(ctx context.Context, task func() error) error {
 	if err := p.semaphore.Acquire(ctx); err != nil {
 		return err
 	}
-	
+
 	go func() {
 		defer p.semaphore.Release()
 		_ = task()
 	}()
-	
+
 	return nil
 }
 
@@ -112,12 +112,12 @@ func (p *WorkerPool) Wait(ctx context.Context) error {
 			return err
 		}
 	}
-	
+
 	// Release all slots
 	for i := 0; i < p.workers; i++ {
 		p.semaphore.Release()
 	}
-	
+
 	return nil
 }
 
