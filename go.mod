@@ -1,10 +1,10 @@
 module github.com/fchimpan/gh-workflow-stats
 
-go 1.23.0
+go 1.25.0
 
 require (
 	github.com/briandowns/spinner v1.23.2
-	github.com/cli/go-gh/v2 v2.12.2
+	github.com/cli/go-gh/v2 v2.13.0
 	github.com/fatih/color v1.18.0
 	github.com/gofri/go-github-ratelimit v1.1.1
 	github.com/gofri/go-github-ratelimit/v2 v2.0.2
