@@ -26,8 +26,8 @@ func (c *WorkflowRunConverter) ConvertRuns(githubRuns []*github.WorkflowRun) *ty
 	}
 
 	stats := &types.WorkflowRunStats{
-		Name:        githubRuns[0].GetName(),
-		TotalCount:  len(githubRuns),
+		Name:       githubRuns[0].GetName(),
+		TotalCount: len(githubRuns),
 		Conclusions: map[types.WorkflowConclusion]*types.ConclusionSummary{
 			types.ConclusionSuccess: {Count: 0, Runs: []*types.WorkflowRunSummary{}},
 			types.ConclusionFailure: {Count: 0, Runs: []*types.WorkflowRunSummary{}},
@@ -36,18 +36,18 @@ func (c *WorkflowRunConverter) ConvertRuns(githubRuns []*github.WorkflowRun) *ty
 	}
 
 	var successDurations []float64
-	
+
 	for _, run := range githubRuns {
 		summary := c.convertSingleRun(run)
 		conclusion := types.NormalizeConclusion(summary.Conclusion.String())
-		
+
 		stats.Conclusions[conclusion].Count++
 		stats.Conclusions[conclusion].Runs = append(stats.Conclusions[conclusion].Runs, summary)
-		
+
 		// Collect durations for successful, completed runs for statistics
-		if conclusion == types.ConclusionSuccess && 
-		   summary.Status == types.StatusCompleted && 
-		   summary.Duration > 0 {
+		if conclusion == types.ConclusionSuccess &&
+			summary.Status == types.StatusCompleted &&
+			summary.Duration > 0 {
 			successDurations = append(successDurations, summary.Duration)
 		}
 	}
@@ -96,12 +96,12 @@ func (c *WorkflowRunConverter) buildRunURL(run *github.WorkflowRun) string {
 	if baseURL == "" {
 		return ""
 	}
-	
+
 	attempt := run.GetRunAttempt()
 	if attempt > 1 {
 		return baseURL + "/attempts/" + strconv.Itoa(attempt)
 	}
-	
+
 	return baseURL
 }
 
@@ -109,22 +109,22 @@ func (c *WorkflowRunConverter) buildRunURL(run *github.WorkflowRun) string {
 func (c *WorkflowRunConverter) calculateDuration(run *github.WorkflowRun) float64 {
 	startTime := run.GetRunStartedAt()
 	endTime := run.GetUpdatedAt()
-	
+
 	if startTime.IsZero() || endTime.IsZero() {
 		return 0
 	}
-	
+
 	duration := endTime.Sub(startTime.Time).Seconds()
-	
+
 	// Apply bounds checking
 	if duration < 0 {
 		return 0
 	}
-	
+
 	if duration > types.MaxWorkflowDurationSeconds {
 		return types.MaxWorkflowDurationCapped
 	}
-	
+
 	return duration
 }
 
@@ -144,7 +144,7 @@ func (c *WorkflowJobConverter) ConvertJobs(githubJobs []*github.WorkflowJob) []*
 
 	// Group jobs by name
 	jobGroups := c.groupJobsByName(githubJobs)
-	
+
 	var result []*types.WorkflowJobStats
 	for jobName, jobs := range jobGroups {
 		jobStats := c.convertJobGroup(jobName, jobs)
@@ -157,12 +157,12 @@ func (c *WorkflowJobConverter) ConvertJobs(githubJobs []*github.WorkflowJob) []*
 // groupJobsByName groups jobs by their name
 func (c *WorkflowJobConverter) groupJobsByName(jobs []*github.WorkflowJob) map[string][]*github.WorkflowJob {
 	groups := make(map[string][]*github.WorkflowJob)
-	
+
 	for _, job := range jobs {
 		name := job.GetName()
 		groups[name] = append(groups[name], job)
 	}
-	
+
 	return groups
 }
 
@@ -233,7 +233,7 @@ type stepAggregator struct {
 func (c *WorkflowJobConverter) processJobSteps(job *github.WorkflowJob, stepGroups map[string]*stepAggregator) {
 	for _, step := range job.Steps {
 		stepName := step.GetName()
-		
+
 		if _, exists := stepGroups[stepName]; !exists {
 			stepGroups[stepName] = &stepAggregator{
 				name:        stepName,
@@ -269,7 +269,7 @@ func (c *WorkflowJobConverter) processJobSteps(job *github.WorkflowJob, stepGrou
 // convertStepAggregators converts step aggregators to StepStats
 func (c *WorkflowJobConverter) convertStepAggregators(stepGroups map[string]*stepAggregator) []*types.StepStats {
 	var steps []*types.StepStats
-	
+
 	for _, aggregator := range stepGroups {
 		stepStats := &types.StepStats{
 			Name:        aggregator.name,
@@ -307,11 +307,11 @@ func (c *WorkflowJobConverter) convertStepAggregators(stepGroups map[string]*ste
 func (c *WorkflowJobConverter) calculateJobDuration(job *github.WorkflowJob) float64 {
 	startTime := job.GetStartedAt()
 	endTime := job.GetCompletedAt()
-	
+
 	if startTime.IsZero() || endTime.IsZero() {
 		return 0
 	}
-	
+
 	duration := endTime.Sub(startTime.Time).Seconds()
 	return max(duration, 0)
 }
@@ -320,11 +320,11 @@ func (c *WorkflowJobConverter) calculateJobDuration(job *github.WorkflowJob) flo
 func (c *WorkflowJobConverter) calculateStepDuration(step *github.TaskStep) float64 {
 	startTime := step.GetStartedAt()
 	endTime := step.GetCompletedAt()
-	
+
 	if startTime.IsZero() || endTime.IsZero() {
 		return 0
 	}
-	
+
 	duration := endTime.Sub(startTime.Time).Seconds()
 	return max(duration, 0)
 }

@@ -21,7 +21,7 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 	if c.client == nil {
 		return nil, fmt.Errorf("GitHub client not initialized")
 	}
-	
+
 	if len(runs) == 0 {
 		c.logger.Debug("no workflow runs to fetch jobs for")
 		return []*github.WorkflowJob{}, nil
@@ -33,16 +33,14 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 		"runs_count", len(runs),
 	)
 
-	// Optimize channel buffer size
-	bufferSize := min(len(runs), 100)
-	jobsCh := make(chan []*github.WorkflowJob, bufferSize)
+	jobsCh := make(chan []*github.WorkflowJob, len(runs))
 	errCh := make(chan error, len(runs))
 
 	// Use original high-concurrency semaphore for performance
 	sem := make(chan struct{}, runtime.NumCPU()*8)
 	var wg sync.WaitGroup
 	wg.Add(len(runs))
-	
+
 	for _, run := range runs {
 		sem <- struct{}{}
 
@@ -51,7 +49,7 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 				<-sem
 				wg.Done()
 			}()
-			
+
 			// Skip nil runs
 			if run == nil {
 				c.logger.Debug("skipping nil workflow run")
@@ -66,14 +64,14 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 			jobs, resp, err := c.client.Actions.ListWorkflowJobsAttempt(ctx, cfg.Org, cfg.Repo, run.GetID(), int64(run.GetRunAttempt()), &github.ListOptions{
 				PerPage: perPage,
 			})
-			
+
 			if err != nil {
 				// Handle rate limit errors specifically
 				if _, ok := err.(*github.RateLimitError); ok {
 					errCh <- RateLimitError{Err: err}
 					return
 				}
-				
+
 				// For 404 errors, skip silently (job might not exist)
 				if resp != nil && resp.Response != nil && resp.StatusCode == http.StatusNotFound {
 					c.logger.Debug("workflow jobs not found, skipping",
@@ -82,7 +80,7 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 					)
 					return
 				}
-				
+
 				// For other HTTP errors, skip
 				if resp != nil && resp.Response != nil {
 					c.logger.Debug("HTTP error fetching jobs, skipping",
@@ -91,12 +89,12 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 					)
 					return
 				}
-				
+
 				// For other errors, report them
 				errCh <- err
 				return
 			}
-			
+
 			if jobs == nil || jobs.Jobs == nil || len(jobs.Jobs) == 0 {
 				c.logger.Debug("no jobs found for run",
 					"run_id", run.GetID(),
@@ -104,16 +102,16 @@ func (c *WorkflowStatsClient) FetchWorkflowJobsAttempts(ctx context.Context, run
 				)
 				return
 			}
-			
+
 			c.logger.Debug("fetched jobs for run",
 				"run_id", run.GetID(),
 				"jobs_count", len(jobs.Jobs),
 			)
-			
+
 			jobsCh <- jobs.Jobs
 		}(run)
 	}
-	
+
 	wg.Wait()
 	close(jobsCh)
 	close(errCh)

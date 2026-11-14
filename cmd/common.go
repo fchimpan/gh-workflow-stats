@@ -37,7 +37,6 @@ func resolveHost(cmd *cobra.Command, host *string) {
 	}
 }
 
-
 // Legacy functions for backward compatibility
 // These will be removed in a future version
 
@@ -55,11 +54,11 @@ func createConfig(host, org, repo, fileName string, id int64) config {
 // createOptions creates a legacy options struct from command flags
 func createOptions(actor, branch, event string, status []string, created, headSHA string,
 	excludePullRequests, all, js bool, checkSuiteID int64, jobNum int) options {
-	
+
 	if jobNum <= 0 {
 		jobNum = types.DefaultJobCount
 	}
-	
+
 	return options{
 		actor:               actor,
 		branch:              branch,

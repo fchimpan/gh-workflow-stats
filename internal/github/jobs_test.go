@@ -13,20 +13,20 @@ func TestFetchWorkflowJobsAttempts_EmptyRuns(t *testing.T) {
 	// Test with empty runs list
 	ctx := context.Background()
 	log := logger.NewNoOpLogger()
-	
+
 	client := &WorkflowStatsClient{
 		logger: log,
 		client: github.NewClient(nil), // Initialize with nil http client for testing
 	}
-	
+
 	cfg := &WorkflowRunsConfig{
 		Org:  "test-org",
 		Repo: "test-repo",
 	}
-	
+
 	// Execute with empty runs
 	jobs, err := client.FetchWorkflowJobsAttempts(ctx, []*github.WorkflowRun{}, cfg)
-	
+
 	// Assert
 	assert.NoError(t, err)
 	assert.Empty(t, jobs)
@@ -36,17 +36,17 @@ func TestFetchWorkflowJobsAttempts_NilHandling(t *testing.T) {
 	// Test that nil values are handled properly
 	ctx := context.Background()
 	log := logger.NewNoOpLogger()
-	
+
 	client := &WorkflowStatsClient{
 		logger: log,
 		client: github.NewClient(nil),
 	}
-	
+
 	// Test with nil config
 	_, err := client.FetchWorkflowJobsAttempts(ctx, []*github.WorkflowRun{{ID: github.Int64(1)}}, nil)
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "config cannot be nil")
-	
+
 	// Test with nil config again to verify different error path
 	_, err = client.FetchWorkflowJobsAttempts(context.TODO(), []*github.WorkflowRun{{ID: github.Int64(1)}}, nil)
 	assert.Error(t, err)
@@ -85,7 +85,7 @@ func TestMin(t *testing.T) {
 			expected: -10,
 		},
 	}
-	
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			result := min(tt.a, tt.b)
@@ -98,17 +98,17 @@ func TestFetchWorkflowJobsAttempts_NilRunsInSlice(t *testing.T) {
 	// Test that nil runs within the slice are handled properly
 	ctx := context.Background()
 	log := logger.NewNoOpLogger()
-	
+
 	client := &WorkflowStatsClient{
 		logger: log,
 		client: github.NewClient(nil),
 	}
-	
+
 	cfg := &WorkflowRunsConfig{
 		Org:  "test-org",
 		Repo: "test-repo",
 	}
-	
+
 	// Create slice with nil runs mixed in
 	runs := []*github.WorkflowRun{
 		{ID: github.Int64(1), RunAttempt: github.Int(1)},
@@ -116,7 +116,7 @@ func TestFetchWorkflowJobsAttempts_NilRunsInSlice(t *testing.T) {
 		{ID: github.Int64(2), RunAttempt: github.Int(1)},
 		nil, // Another nil run
 	}
-	
+
 	// We mainly want to ensure no panic occurs when processing nil runs
 	assert.NotPanics(t, func() {
 		_, _ = client.FetchWorkflowJobsAttempts(ctx, runs, cfg)
@@ -127,7 +127,7 @@ func TestFetchWorkflowJobsAttempts_NilRunsInSlice(t *testing.T) {
 // This is a placeholder showing the structure of more comprehensive tests
 func TestFetchWorkflowJobsAttempts_Integration(t *testing.T) {
 	t.Skip("Integration test - requires GitHub API mock or test server")
-	
+
 	// This test would verify:
 	// 1. Concurrent execution with semaphore
 	// 2. Error handling for rate limits
